@@ -239,7 +239,6 @@ namespace DataGraph
             loading.Step = 1;
             loading.Value = 0;
             backgroundWorker1.RunWorkerAsync();
-            //clark part
             clearAll();
             OpenFileDialog opensesame = new OpenFileDialog();
             opensesame.Title = "Open csv File";
@@ -265,7 +264,6 @@ namespace DataGraph
                 x.Text = "EHE";
                 y.Text = "EHN";
                 z.Text = "EHZ";
-                
                 date = excel.Date;
                 hourmin = excel.Hours;
                 //degree = excel.CompassVal;
@@ -275,26 +273,10 @@ namespace DataGraph
                 eq.EHNs = excel.getAxis(2, choose);
                 eq.EHZs = excel.getAxis(3, choose);
                 fileOpened = true;
-            }
-            catch(Exception c )
-            {
-                MessageBox.Show(c.ToString());
-            }
-            
-            //killThread = false;
-            //Thread thread = new Thread(new ThreadStart(staltaThead));
-            //thread.Start();
-            //----------------------TestChart---------------------
-            try
-            {
                 EHE = eq.EHEs;
                 EHN = eq.EHNs;
                 EHZ = eq.EHZs;
                 staltaThread();
-                /*for (int x = 0; x < 4000; x++)
-                {
-                    richTextBox1.Text += STALTAEHE[x].ToString() + "\n";
-                }*/
                 max1.Text = EHE.Max().ToString();
                 min1.Text = EHE.Min().ToString();
                 max2.Text = EHN.Max().ToString();
@@ -305,7 +287,7 @@ namespace DataGraph
                 excel.creatChart(EHNchart, EHN, "y axis", 0, Color.Gray);
                 excel.creatChart(EHZchart, EHZ, "z axis", 0, Color.Gray);
             }
-            catch (Exception c) { MessageBox.Show(c.ToString()); }
+            catch (Exception c) { MessageBox.Show("Wrong file name selected"); }
             
             //----------------------TestChart---------------------
             

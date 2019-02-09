@@ -18,40 +18,24 @@ namespace EarthquakeGraph
         private int triggertime = 10;
         private double counts = 0.0000625;
 
+        /// <summary>
+        /// Axis lol
+        /// </summary>
         public int Axis { get { return this.axis; } set { this.axis = value; } }
-
-        public EarthquakeAnalyzer()
-        {
-        }
-
-        /*public EarthquakeAnalyzer(List<double> EHE, List<double> EHN, List<double> EHZ)
-        {
-            this.EHE = EHE;
-            this.EHN = EHN;
-            this.EHZ = EHZ;
-        }
-
-
-        public List<double> EHEs
-        {
-            get { return this.EHE; }
-            set { EHE = value; }
-        }
-        public List<double> EHNs
-        {
-            get { return this.EHN; }
-            set { EHN = value; }
-        }
-        public List<double> EHZs
-        {
-            get { return this.EHZ; }
-            set { EHZ = value; }
-        }*/
-
+        
         #region EARTQUAKE_ANALYZER
 
         #region EARTHQUAKE_CHECKER
 
+        /// <summary>
+        /// Checks the STA/LTA of an axis and verifies if its an earthquake
+        /// </summary>
+        /// <param name="stalta">List of double STA/LTA calculated values</param>
+        /// <param name="axis">Axis where the STA/LTA is. x = 1, y = 2, z = 3</param>
+        /// <param name="sps">Samples per second of the sensor</param>
+        /// <returns>
+        /// Returns a boolean value that indicates if there is an earthquake detected
+        /// </returns>
         public bool checkEarhtquakeV2(List<double> stalta, int axis, int sps)
         {
             start = 0;
@@ -124,7 +108,15 @@ namespace EarthquakeGraph
            // return output;
             return cond;
         }
-
+        /// <summary>
+        /// Checks the STA first if the value exceeded the allowed trigger threshold.
+        /// Then checks the LTA if the value is then below the detrigger threshold
+        /// </summary>
+        /// <param name="sta">List of double STA calculated values</param>
+        /// <param name="lta">List of double LTA calculated values</param>
+        /// <param name="axis">Axis where the STA/LTA is. x = 1, y = 2, z = 3</param>
+        /// <param name="sps">Samples per second of the sensor</param>
+        /// <returns>Returns a boolean value that indicates if there is an earthquake detected</returns>
         public bool checkEarthquake(List<double> sta, List<double> lta, int axis, int sps)
         {
             bool cond = false;
@@ -178,7 +170,12 @@ namespace EarthquakeGraph
         #endregion
 
         #region EARTQUAKE_CALCULATOR
-
+        /// <summary>
+        /// Calculates the short term average of the inputed axis.
+        /// </summary>
+        /// <param name="input">Axis to calculate</param>
+        /// <param name="period">Period of the moving average</param>
+        /// <returns>List of the double values of the calculated STA</returns>
         public List<double> getSTA(List<double> input, int period)
         {
             //List<double> sta = array.ConvertAll<double>(x => Math.Abs(x));
@@ -200,7 +197,13 @@ namespace EarthquakeGraph
             }
             return output;
         }
-
+        /// <summary>
+        /// Calculates the long term average of the inputed axis. Uses Array
+        /// if array buffer wont be filled, output is 1
+        /// </summary>
+        /// <param name="input">Axis to calculate</param>
+        /// <param name="period">Period of the moving average</param>
+        /// <returns>List of the double values of the calculated LTA</returns>
         public List<double> getLTA(List<double> input, int period)
         {
             List<double> output = new List<double>(input.Count);
@@ -223,7 +226,13 @@ namespace EarthquakeGraph
             }
             return output;
         }
-
+        /// <summary>
+        /// Calculates the long term average of the inputed axis. Uses Queue
+        /// A moving average
+        /// </summary>
+        /// <param name="input">Axis to calculate</param>
+        /// <param name="period">Period of the moving average</param>
+        /// <returns>List of the double values of the calculated LTA</returns>
         public List<double> getLTAv2(List<double> input, int period)
         {
             List<double> output = new List<double>();
@@ -242,8 +251,15 @@ namespace EarthquakeGraph
             }
             return output;
         }
-
-        public List<double> getSTALTAratio(List<double> input, int period1, int period2)
+        /// <summary>
+        /// Calculates the ratio of the STA and LTA of an Axis
+        /// Calls the getSTA and getLTA methods
+        /// </summary>
+        /// <param name="input">Axis to be calculated</param>
+        /// <param name="period1">Period of the STA</param>
+        /// <param name="period2">Period of the LTA</param>
+        /// <returns>List of the double values of the calculated ratio of STA & LTA</returns>
+        public List<double> getSTALTAratio(List<double> input, int period1, int period2)//Period is dependent on SPS
         {
             double quo = 1;
             List<double> staltaRatio = new List<double>();
@@ -260,8 +276,15 @@ namespace EarthquakeGraph
             }
             return staltaRatio;
         }
-
-        public List<double> getSLALTAratioV2(List<double> input, int period1, int period2)
+        /// <summary>
+        /// Calculates the ratio of the STA and LTA of an Axis
+        /// Uses array as buffer
+        /// </summary>
+        /// <param name="input">Axis to be calculated</param>
+        /// <param name="period1">Period of the STA</param>
+        /// <param name="period2">Period of the LTA</param>
+        /// <returns>List of the double values of the calculated ratio of STA & LTA</returns>
+        public List<double> getSLALTAratioV2(List<double> input, int period1, int period2)//Period is dependent on SPS
         {
             double ratio = 0;
             List<double> stalta = new List<double>();
@@ -285,13 +308,23 @@ namespace EarthquakeGraph
             }
             return stalta;
         }
-
+        /// <summary>
+        /// Converts the counts in time unit
+        /// </summary>
+        /// <param name="count">Input count</param>
+        /// <returns>Returns the converted time value</returns>
         public double getTime(double count)
         {
             double sec = count / Convert.ToInt16(getSamplesPerSecond(Choose));
             return sec;
         }
-
+        /// <summary>
+        /// Calculates the magnitude of the max value in the axis
+        /// </summary>
+        /// <param name="axis">Axis where to calculate</param>
+        /// <param name="pw">P-wave of the earthquake</param>
+        /// <param name="sw">S-wave of the earthquake</param>
+        /// <returns>Returns the magnitude of the earthquake (LOL NO)</returns>
         public double calculateMagnitude(List<double> axis, double pw, double sw)
         {
             List<double> holder = new List<double>();
@@ -325,22 +358,40 @@ namespace EarthquakeGraph
                 magnitude = 9001;
             return magnitude;
         }
-
+        /// <summary>
+        /// Calculates the hypocenter of the earthquake
+        /// </summary>
+        /// <param name="pwave">P-wave of the earthquake</param>
+        /// <param name="swave">S-wave of the earthquake</param>
+        /// <param name="sps">Samples per second of the device</param>
+        /// <param name="seconds">Time started</param>
+        /// <returns>Returns the calculated hypocenter or the distance of the device to the earthquake</returns>
         public double calculateHypocenter(double pwave, double swave, double sps, double seconds)
         {
             double time = ((swave - pwave) / sps) + seconds;
             double hypocenter = Math.Round((time * 8),2);
             return hypocenter;
         }
-
+        /// <summary>
+        /// lol wa gamit
+        /// </summary>
         public void detectPW()
         {
             px = EHEs[start];
             py = EHNs[start];
             pz = EHZs[start];
         }
-
-        public int calculateDirectionV2(List<double> EHE, List<double> EHN, List<double> EHZ, double start, double finish)
+        /// <summary>
+        /// Calculates the direction of where the earthquake is coming from
+        /// Uses hysteresis method of calculation
+        /// </summary>
+        /// <param name="EHE">X-axis</param>
+        /// <param name="EHN">Y-axis</param>
+        /// <param name="EHZ">Z-axis</param>
+        /// <param name="start">P-wave</param>
+        /// <param name="finish">S-wave</param>
+        /// <returns>Returns the direction in degrees</returns>
+        public int calculateDirection(List<double> EHE, List<double> EHN, List<double> EHZ, double start, double finish)
         {
             int[] degree = new int[361];
             double angle = 0;
@@ -382,7 +433,15 @@ namespace EarthquakeGraph
             }
             return index;
         }
-
+        /// <summary>
+        /// Calculates the direction of where the earthquake is coming from
+        /// Uses P-wave as the basis of direction
+        /// </summary>
+        /// <param name="x">P-wave x value</param>
+        /// <param name="y">P-wave y value</param>
+        /// <param name="z">P-wave z value</param>
+        /// <param name="degree">Degree of orientation</param>
+        /// <returns>Returns the direction in degrees</returns>
         public double calculateDirection(double x, double y, double z, double degree)
         {
             double threshold = 0;
@@ -469,7 +528,6 @@ namespace EarthquakeGraph
 
         #endregion
     }
-
     /*double ave = 0;
     List<double> output = new List<double>();
     Queue<double> buffs = new Queue<double>();
