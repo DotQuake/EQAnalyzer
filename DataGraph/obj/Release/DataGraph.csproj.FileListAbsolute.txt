@@ -1,0 +1,15 @@
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\bin\Release\DataGraph.exe.config
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\bin\Release\DataGraph.exe
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\bin\Release\DataGraph.pdb
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Release\DataGraph.Form1.resources
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Release\DataGraph.Properties.Resources.resources
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Release\DataGraph.csproj.GenerateResource.Cache
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Release\DataGraph.exe
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Release\DataGraph.pdb
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Release\DataGraph.csprojResolveAssemblyReference.cache
+C:\Users\Keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Release\DataGraph.csproj.ResolveComReference.cache
+C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\DataGraph\bin\Release\EarthquakeGraph.dll
+C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\DataGraph\bin\Release\EarthquakeGraph.pdb
+C:\Users\Keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Release\DataGraph.STALTA.resources
+C:\Users\Keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\bin\Release\Newtonsoft.Json.dll
+C:\Users\Keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\bin\Release\Newtonsoft.Json.xml

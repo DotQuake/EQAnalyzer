@@ -1,0 +1,9 @@
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\bin\Debug\DataGraph.exe.config
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\bin\Debug\DataGraph.exe
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\bin\Debug\DataGraph.pdb
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Debug\DataGraph.csprojResolveAssemblyReference.cache
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Debug\DataGraph.Form1.resources
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Debug\DataGraph.Properties.Resources.resources
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Debug\DataGraph.csproj.GenerateResource.Cache
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Debug\DataGraph.exe
+c:\users\keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Debug\DataGraph.pdb

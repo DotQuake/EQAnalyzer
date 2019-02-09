@@ -1,0 +1,6 @@
+C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\bin\Release\EarthquakeGraph.dll
+C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\bin\Release\EarthquakeGraph.pdb
+C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\obj\Release\EarthquakeGraph.csprojResolveAssemblyReference.cache
+C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\obj\Release\EarthquakeGraph.csproj.ResolveComReference.cache
+C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\obj\Release\EarthquakeGraph.dll
+C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\obj\Release\EarthquakeGraph.pdb
