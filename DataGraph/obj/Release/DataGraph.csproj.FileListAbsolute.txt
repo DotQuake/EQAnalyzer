@@ -13,3 +13,4 @@ C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\DataGraph\bin\Rel
 C:\Users\Keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Release\DataGraph.STALTA.resources
 C:\Users\Keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\bin\Release\Newtonsoft.Json.dll
 C:\Users\Keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\bin\Release\Newtonsoft.Json.xml
+C:\Users\Keith\documents\visual studio 2012\Projects\DataGraph\DataGraph\obj\Release\DataGraph.Settings.resources

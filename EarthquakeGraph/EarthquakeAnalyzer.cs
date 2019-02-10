@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EarthquakeGraph
 {
+    /// <summary>
+    /// A class for analyzing seismic data and checks if an earthquake is recorded in the data
+    /// </summary>
     public class EarthquakeAnalyzer : Excel
     {
         private List<double> eqHolder = new List<double>();
@@ -18,6 +21,14 @@ namespace EarthquakeGraph
         private int triggertime = 10;
         private double counts = 0.0000625;
 
+        /// <summary>
+        /// Trigger threshold
+        /// </summary>
+        public double Trigger { get { return trigger; } set { trigger = value; } }
+        /// <summary>
+        /// Detrigger threshold
+        /// </summary>
+        public double Detrigger { get { return detrigger; } set { detrigger = value; } }
         /// <summary>
         /// Axis lol
         /// </summary>
@@ -58,10 +69,13 @@ namespace EarthquakeGraph
                                     state = "checkIfDetriggered";
                                     break;
                                 }
-                                else if (x == stalta.Count)
+                                else if (x == stalta.Count - 1)
                                 {
+                                    output.Add("x index: " + x.ToString());
+                                    output.Add("x value: " + stalta[x].ToString());
                                     output.Add("finished not triggered");
                                     finish = true;
+                                    break;
                                 }
                             }
                             //if (state == "checkSTA")
@@ -79,10 +93,11 @@ namespace EarthquakeGraph
                                     state = "checkActiveTime";
                                     break;
                                 }
-                                else if (x == stalta.Count)
+                                else if (x == stalta.Count - 1)
                                 {
                                     output.Add("finished not detriggered");
                                     finish = true;
+                                    break;
                                 }
                             }
                             break;
@@ -104,8 +119,8 @@ namespace EarthquakeGraph
                         }
                 }
             }
+            output.Add("\ncond: " + cond.ToString());
             this.axis = axis;
-           // return output;
             return cond;
         }
         /// <summary>
@@ -251,14 +266,22 @@ namespace EarthquakeGraph
             }
             return output;
         }
-        /// <summary>
-        /// Calculates the ratio of the STA and LTA of an Axis
-        /// Calls the getSTA and getLTA methods
-        /// </summary>
-        /// <param name="input">Axis to be calculated</param>
-        /// <param name="period1">Period of the STA</param>
-        /// <param name="period2">Period of the LTA</param>
-        /// <returns>List of the double values of the calculated ratio of STA & LTA</returns>
+        /// Summary:
+        ///     Calculates the ratio of the STA and LTA of an Axis.
+        ///     Calls the getSTA and getLTA methods.
+        ///     
+        /// Parameters:
+        ///   input:
+        ///     Axis to be calculated.
+        ///     
+        ///   period1:
+        ///     Period of the STA
+        ///     
+        ///   period2:
+        ///     Period of the LTA
+        ///     
+        /// Returns:
+        ///     List of the double values of the calculated ratio of STA & LTA.
         public List<double> getSTALTAratio(List<double> input, int period1, int period2)//Period is dependent on SPS
         {
             double quo = 1;

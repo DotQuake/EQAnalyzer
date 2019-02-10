@@ -429,7 +429,7 @@ namespace EarthquakeGraph
             chart1.ChartAreas[chartArea].AxisY.MajorGrid.LineWidth = 0;
             chart1.ChartAreas[chartArea].AxisX.LabelStyle.Enabled = false;
             chart1.ChartAreas[chartArea].AxisY.LabelStyle.Enabled = false;
-
+            
             //chart1.DataBind();
             for (int x = 0; x < series.Count; x++)
             {

@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.EHEchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.EHNchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -74,6 +74,7 @@
             this.loading = new System.Windows.Forms.ToolStripProgressBar();
             this.statuses = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.EHEchart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EHNchart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EHZchart)).BeginInit();
@@ -94,17 +95,17 @@
             this.EHEchart.BorderlineWidth = 0;
             this.EHEchart.BorderSkin.BackColor = System.Drawing.Color.DarkGray;
             this.EHEchart.BorderSkin.BackHatchStyle = System.Windows.Forms.DataVisualization.Charting.ChartHatchStyle.Cross;
-            chartArea1.Name = "ChartArea1";
-            this.EHEchart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.EHEchart.Legends.Add(legend1);
+            chartArea4.Name = "ChartArea1";
+            this.EHEchart.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.EHEchart.Legends.Add(legend4);
             this.EHEchart.Location = new System.Drawing.Point(0, 113);
             this.EHEchart.Margin = new System.Windows.Forms.Padding(1);
             this.EHEchart.Name = "EHEchart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.EHEchart.Series.Add(series1);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.EHEchart.Series.Add(series4);
             this.EHEchart.Size = new System.Drawing.Size(1697, 280);
             this.EHEchart.TabIndex = 6;
             this.EHEchart.Text = "chart1";
@@ -117,17 +118,17 @@
             this.EHNchart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.EHNchart.BackColor = System.Drawing.Color.LightGray;
-            chartArea2.Name = "ChartArea1";
-            this.EHNchart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.EHNchart.Legends.Add(legend2);
+            chartArea5.Name = "ChartArea1";
+            this.EHNchart.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.EHNchart.Legends.Add(legend5);
             this.EHNchart.Location = new System.Drawing.Point(0, 395);
             this.EHNchart.Margin = new System.Windows.Forms.Padding(1);
             this.EHNchart.Name = "EHNchart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.EHNchart.Series.Add(series2);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.EHNchart.Series.Add(series5);
             this.EHNchart.Size = new System.Drawing.Size(1697, 280);
             this.EHNchart.TabIndex = 6;
             this.EHNchart.Text = "chart1";
@@ -139,17 +140,17 @@
             this.EHZchart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.EHZchart.BackColor = System.Drawing.Color.LightGray;
-            chartArea3.Name = "ChartArea1";
-            this.EHZchart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.EHZchart.Legends.Add(legend3);
+            chartArea6.Name = "ChartArea1";
+            this.EHZchart.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.EHZchart.Legends.Add(legend6);
             this.EHZchart.Location = new System.Drawing.Point(0, 677);
             this.EHZchart.Margin = new System.Windows.Forms.Padding(1);
             this.EHZchart.Name = "EHZchart";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.EHZchart.Series.Add(series3);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.EHZchart.Series.Add(series6);
             this.EHZchart.Size = new System.Drawing.Size(1697, 280);
             this.EHZchart.TabIndex = 6;
             this.EHZchart.Text = "chart1";
@@ -209,13 +210,14 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem1,
             this.philvolcsToolStripMenuItem,
             this.eQAnalToolStripMenuItem,
-            this.testToolStripMenuItem,
-            this.testV2ToolStripMenuItem});
+            this.testV2ToolStripMenuItem,
+            this.testToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
-            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
+            this.settingsToolStripMenuItem.Text = "Edit";
             // 
             // philvolcsToolStripMenuItem
             // 
@@ -433,6 +435,13 @@
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
+            // settingsToolStripMenuItem1
+            // 
+            this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(152, 24);
+            this.settingsToolStripMenuItem1.Text = "Settings";
+            this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -515,6 +524,7 @@
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testV2ToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
     }
 }
 

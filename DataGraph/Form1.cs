@@ -29,7 +29,9 @@ namespace DataGraph
         public bool fileOpened = false, clicked = false, psSet = false, choose = false;
         public double pwaveEHE, swaveEHE, pwaveEHN, swaveEHN, pwaveEHZ, swaveEHZ, holder = 0, xVal = 0, xp, xs;
         public int axis,sps;
+        public int statime = 200, ltatime = 3000;
         string state = "checkIfTriggered";
+        string openpath = @"E:\Kiting\CSVFiles";
         double trigger = 2.5, detrigger = 0.5, triggertime = 10;
         int start, end;
         EarthquakeAnalyzer eq = new EarthquakeAnalyzer();
@@ -229,7 +231,7 @@ namespace DataGraph
             x.Visible = true;
             y.Visible = true;
             z.Visible = true;
-
+            header.Text = "";
 
         }
 
@@ -243,7 +245,7 @@ namespace DataGraph
             OpenFileDialog opensesame = new OpenFileDialog();
             opensesame.Title = "Open csv File";
             opensesame.Filter = "CSV files|*.csv";
-            opensesame.InitialDirectory = @"E:\Kiting\CSVFiles";
+            opensesame.InitialDirectory = openpath;
             if (opensesame.ShowDialog() == DialogResult.OK)
             {
                 fileName = opensesame.FileName.ToString();
@@ -307,9 +309,9 @@ namespace DataGraph
 
         public void staltaThread()
         {
-            STALTAEHE = eq.getSTALTAratio(EHE, 200, 3000);
-            STALTAEHN = eq.getSTALTAratio(EHN, 200, 3000);
-            STALTAEHZ = eq.getSTALTAratio(EHZ, 200, 3000);
+            STALTAEHE = eq.getSTALTAratio(EHE, statime, ltatime);
+            STALTAEHN = eq.getSTALTAratio(EHN, statime, ltatime);
+            STALTAEHZ = eq.getSTALTAratio(EHZ, statime, ltatime);
         }
 
         private void checkEQToolStripMenuItem_Click(object sender, EventArgs e)
@@ -318,40 +320,8 @@ namespace DataGraph
             degree = 0;
             hypocenter = 0;
             bool choise = false;
-           /* for (int x = 1; x <= 3; x++)
-            {
-                if (checkEarhtquakeV2(STALTAEHE, x, sps))
-                {
-                    choise = true;
-                    break;
-                }
-            }
-            if (choise)
-            {
-                if (eq.Axis == 1)
-                {
-                    degree = eq.calculateDirection(EHE[(int)xp], EHN[(int)xp], EHZ[(int)xp], 0) + degree;
-                    magnitude = eq.calculateMagnitude(EHE, xp, xs);
-                    hypocenter = eq.calculateHypocenter(pwaveEHE, swaveEHE, sps, sec);
-                }
-                else if (eq.Axis == 2)
-                {
-                    degree = eq.calculateDirection(EHE[(int)xp], EHN[(int)xp], EHZ[(int)xp], 0) + degree;
-                    magnitude = eq.calculateMagnitude(EHN, xp, xs);
-                    hypocenter = eq.calculateHypocenter(pwaveEHN, swaveEHN, sps, sec);
-                }
-                else
-                {
-                    degree = eq.calculateDirection(EHE[(int)xp], EHN[(int)xp], EHZ[(int)xp], 0) + degree;
-                    magnitude = eq.calculateMagnitude(EHZ, xp, xs);
-                    hypocenter = eq.calculateHypocenter(pwaveEHZ, swaveEHZ, sps, sec);
-                }
-                MessageBox.Show("Eathquake detected\nMagnitude:\t" + magnitude.ToString() + "\nDistance:\t" + "\t" + hypocenter + "km" + "\nDirection:\t" + degree + "\nAxis:\t" + eq.Axis);
-                //MessageBox.Show("Earthquake Detected");
-            }
-            else
-                MessageBox.Show("No Earthquake Detected");
-            /*if (fileOpened)
+
+            if (fileOpened)
             {
                 if (psSet)
                 {
@@ -363,7 +333,7 @@ namespace DataGraph
                     }
                     else
                     {
-                        if (checkEarhtquakeV2(STALTAEHE, 1, sps) || checkEarhtquakeV2(STALTAEHN, 2, sps) || checkEarhtquakeV2(STALTAEHZ, 3, sps))
+                        if (eq.checkEarhtquakeV2(STALTAEHE, 1, sps) || eq.checkEarhtquakeV2(STALTAEHN, 2, sps) || eq.checkEarhtquakeV2(STALTAEHZ, 3, sps))
                         {
                             if (eq.Axis == 1)
                             {
@@ -392,7 +362,7 @@ namespace DataGraph
                 }
                 else
                     MessageBox.Show("Set P-wave and S-wave first");
-            }*/
+            }
 
         }
 
@@ -418,13 +388,7 @@ namespace DataGraph
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string uten = null;
-            foreach(var num in checkEarhtquakeV2(STALTAEHE,1,sps))
-            {
-                uten += num;
-            }
-            MessageBox.Show(uten+"\n");
-            
+            MessageBox.Show(eq.Trigger + "\n" + eq.Detrigger + "\n" + statime + "\n" + ltatime + "\n" + openpath);
         }
 
         private void testV2ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -436,82 +400,23 @@ namespace DataGraph
             }
             MessageBox.Show(uten);            
         }
-        public List<string> checkEarhtquakeV2(List<double> stalta, int axis, int sps)
-        {
-            start = 0;
-            end = 0;
-            List<string> output = new List<string>();
-            bool cond = false, finish = false;
-            state = "checkIfTriggered";
-            while (!finish)
-            {
-                switch (state)
-                {
-                    case "checkIfTriggered":
-                        {
-                            for (int x = 0; x < stalta.Count; x++)
-                            {
-                                if (stalta[x] > trigger)
-                                {
-                                    output.Add("trigger: " + stalta[x].ToString() + "\n");
-                                    start = x;
-                                    state = "checkIfDetriggered";
-                                    break;
-                                }
-                                else if (x == stalta.Count)
-                                {
-                                    output.Add("finished not triggered");
-                                    finish = true;
-                                }
-                            }
-                            //if (state == "checkSTA")
-                            // return cond;
-                            break;
-                        }
-                    case "checkIfDetriggered":
-                        {
-                            for (int x = start; x < stalta.Count; x++)
-                            {
-                                if (stalta[x] < detrigger)
-                                {
-                                    output.Add("detrigger: " + stalta[x].ToString() + "\n");
-                                    end = x;
-                                    state = "checkActiveTime";
-                                    break;
-                                }
-                                else if(x == stalta.Count)
-                                {
-                                    output.Add("finished not detriggered");
-                                    finish = true;
-                                }
-                            }
-                            break;
-                        }
-                    case "checkActiveTime":
-                        {
-                            double res = (end - start) / sps;
-                            output.Add("active time: " + res.ToString());
-                            if (res > (triggertime))
-                            {
-                                cond = true;
-                            }
-                            else
-                            {
-                                cond = false;
-                            }
-                            finish = true;
-                            break;
-                        }
-                }
-            }
-            output.Add("\ncond: " + cond.ToString());
-            this.axis = axis;
-            return output;
-        }
-
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
 
+        }
+
+        private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Settings set = new Settings(statime, ltatime, trigger, detrigger, openpath);
+            if (set.ShowDialog() == DialogResult.OK)
+            {
+                eq.Trigger = set.Trigger;
+                eq.Detrigger = set.Detrigger;
+                openpath = set.Path;
+                statime = set.StaTime;
+                ltatime = set.LtaTime;
+                MessageBox.Show(eq.Trigger+"\n"+eq.Detrigger+"\n"+statime+"\n"+ltatime+"\n"+openpath);
+            }
         }
     }
 }
