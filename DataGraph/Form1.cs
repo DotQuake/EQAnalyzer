@@ -30,10 +30,7 @@ namespace DataGraph
         public double pwaveEHE, swaveEHE, pwaveEHN, swaveEHN, pwaveEHZ, swaveEHZ, holder = 0, xVal = 0, xp, xs;
         public int axis,sps;
         public int statime = 200, ltatime = 3000;
-        string state = "checkIfTriggered";
         string openpath = @"E:\Kiting\CSVFiles";
-        double trigger = 2.5, detrigger = 0.5, triggertime = 10;
-        int start, end;
         EarthquakeAnalyzer eq = new EarthquakeAnalyzer();
         public Excel excel = new Excel();
         System.Drawing.Point? prevPosition = null;
@@ -46,8 +43,6 @@ namespace DataGraph
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //backgroundWorker1.RunWorkerAsync();
-            //..FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             if (choose)
                 statuses.Text = "Status: Load EQAnalyzer format";
@@ -319,8 +314,6 @@ namespace DataGraph
             magnitude = 0;
             degree = 0;
             hypocenter = 0;
-            bool choise = false;
-
             if (fileOpened)
             {
                 if (psSet)
@@ -407,7 +400,7 @@ namespace DataGraph
 
         private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Settings set = new Settings(statime, ltatime, trigger, detrigger, openpath);
+            Settings set = new Settings(statime, ltatime, eq.Trigger, eq.Detrigger, openpath);
             if (set.ShowDialog() == DialogResult.OK)
             {
                 eq.Trigger = set.Trigger;
