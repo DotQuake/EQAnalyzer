@@ -14,7 +14,7 @@ namespace DataGraph
     {
         private int staTime = 3;
         private int ltaTime = 30;
-        private double trigger = 3.0;
+        private double trigger = 2.5;
         private double detrigger = 0.5;
         private string path = "";
         public int StaTime
@@ -64,7 +64,7 @@ namespace DataGraph
         {
             staTime = Convert.ToInt16(staTxtBox.Text);
             ltaTime = Convert.ToInt16(ltaTxtBox.Text);
-            trigger = Convert.ToInt16(thresholdTxtBox.Text);
+            //trigger = Convert.ToInt16(thresholdTxtBox.Text);
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
