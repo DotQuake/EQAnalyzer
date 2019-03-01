@@ -34,16 +34,16 @@
             this.staTxtBox = new System.Windows.Forms.TextBox();
             this.threshold = new System.Windows.Forms.Label();
             this.lta = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.sta = new System.Windows.Forms.Label();
             this.OKBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.specifiedFolder = new System.Windows.Forms.GroupBox();
+            this.browseFolderBtn = new System.Windows.Forms.Button();
             this.defaultPathTxtBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.browseFolderBtn = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.specifiedFolder.SuspendLayout();
             this.SuspendLayout();
@@ -104,6 +104,24 @@
             this.lta.TabIndex = 0;
             this.lta.Text = "LTA";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(214, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(15, 17);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "s";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(214, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(15, 17);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "s";
+            // 
             // sta
             // 
             this.sta.AutoSize = true;
@@ -147,6 +165,16 @@
             this.specifiedFolder.TabStop = false;
             this.specifiedFolder.Text = "Choose specified folder";
             // 
+            // browseFolderBtn
+            // 
+            this.browseFolderBtn.Location = new System.Drawing.Point(210, 24);
+            this.browseFolderBtn.Name = "browseFolderBtn";
+            this.browseFolderBtn.Size = new System.Drawing.Size(33, 32);
+            this.browseFolderBtn.TabIndex = 2;
+            this.browseFolderBtn.Text = "...";
+            this.browseFolderBtn.UseVisualStyleBackColor = true;
+            this.browseFolderBtn.Click += new System.EventHandler(this.browseFolderBtn_Click);
+            // 
             // defaultPathTxtBox
             // 
             this.defaultPathTxtBox.Location = new System.Drawing.Point(65, 29);
@@ -163,34 +191,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Open";
             // 
-            // browseFolderBtn
-            // 
-            this.browseFolderBtn.Location = new System.Drawing.Point(210, 24);
-            this.browseFolderBtn.Name = "browseFolderBtn";
-            this.browseFolderBtn.Size = new System.Drawing.Size(33, 32);
-            this.browseFolderBtn.TabIndex = 2;
-            this.browseFolderBtn.Text = "...";
-            this.browseFolderBtn.UseVisualStyleBackColor = true;
-            this.browseFolderBtn.Click += new System.EventHandler(this.browseFolderBtn_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(214, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(15, 17);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "s";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(214, 56);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(15, 17);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "s";
-            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -201,7 +201,6 @@
             this.Controls.Add(this.OKBtn);
             this.Controls.Add(this.groupBox1);
             this.Name = "Settings";
-            this.Text = "Settings";
             this.Load += new System.EventHandler(this.Settings_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

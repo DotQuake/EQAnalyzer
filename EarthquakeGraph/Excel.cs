@@ -15,7 +15,7 @@ namespace EarthquakeGraph
     /// <summary>
     /// A Class mainly used for reading the CSV file.
     /// </summary>
-    public class Excel
+    public class Excel : Form
     {
         private List<double> EHE = new List<double>();
         private List<double> EHN = new List<double>();
@@ -399,28 +399,42 @@ namespace EarthquakeGraph
         /// <param name="axis">Axis where the list is located</param>
         /// <param name="chartArea">Just put '0' lol</param>
         /// <param name="color">Color of the plotted line chart</param>
-        public void creatChart(System.Windows.Forms.DataVisualization.Charting.Chart chart1, List<double> series, string axis, int chartArea, Color color)
+        public void creatChart(System.Windows.Forms.DataVisualization.Charting.Chart chart1, List<double> series, string axis, int chartArea, Color color, VerticalLineAnnotation line)
         {
+            double max = 0;
             chart1.Series.Clear();
             chart1.DataSource = series;
-            var chart = chart1.ChartAreas[chartArea];
+            var chart = chart1.ChartAreas[chartArea]; 
+
+            line.AxisX = chart.AxisX;
+            line.AllowMoving = true;
+            line.IsInfinitive = true ;
+            line.ClipToChartArea = chart.Name;
+            line.LineColor = Color.Red;
+            line.Visible = true;
+            line.Width = 1;
+            line.X = 0;
+            line.ClipToChartArea = axis;
+
             chart.AxisX.IntervalType = DateTimeIntervalType.Number;
             chart.AxisX.LabelStyle.Format = "";
             chart.AxisY.LabelStyle.Format = "";
             chart.AxisY.LabelStyle.IsEndLabelVisible = false;
-
+            if (series.Max() > Math.Abs(series.Min()))
+                max = series.Max() * 1.1;
+            else
+                max = Math.Abs(series.Min()) * 1.1;
             chart.AxisX.Minimum = 0;
             chart.AxisX.Maximum = series.Count;
-            chart.AxisY.Minimum = series.Min()*1.1;
-            chart.AxisY.Maximum = series.Max()*1.1;
+            chart.AxisY.Minimum = -max;
+            chart.AxisY.Maximum = max;
             chart.AxisX.Interval = Math.Round((double)series.Count/9);
-            chart.AxisY.Interval = Math.Round(((series.Max() + (Math.Abs(series.Min())))/5),2);
+            //chart.AxisY.Interval = Math.Round(((series.Max() + (Math.Abs(series.Min())))/5),2);
             chart1.Series.Add(axis);
-            //chart1.Series[axis].ChartType = SeriesChartType.Spline;
+            chart1.Annotations.Add(line);
             chart1.Series[axis].ChartType = SeriesChartType.Line;
             chart1.Series[axis].Color = color;
             chart1.Series[axis].IsVisibleInLegend = false;
-            //chart1.Series[axis]["LineTension"] = "0.2";
             chart1.ChartAreas[chartArea].AxisX.ScaleView.Zoomable = true;
             chart1.ChartAreas[chartArea].AxisY.ScaleView.Zoomable = true;
             chart1.ChartAreas[chartArea].CursorX.AutoScroll = true;

@@ -15,6 +15,7 @@ namespace DataGraph
 {
     public partial class STALTA : Form
     {
+        public static VerticalLineAnnotation VA1 = new VerticalLineAnnotation();
         Form1 form1 = new Form1();
         List<double> STAEHELTA;
         List<double> STAEHNLTA;
@@ -34,9 +35,11 @@ namespace DataGraph
         private void STALTA_Load(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Maximized;
-            excel.creatChart(STALTAEHE, STAEHELTA, "x", 0, Color.Black);
-            excel.creatChart(STALTAEHN, STAEHNLTA, "y", 0, Color.Pink);
-            excel.creatChart(STALTAEHZ, STAEHZLTA, "z", 0, Color.Yellow);
+            
+            excel.creatChart(STALTAEHE, STAEHELTA, "x", 0, Color.Black, VA1);
+            excel.creatChart(STALTAEHN, STAEHNLTA, "y", 0, Color.Pink, VA1);
+            excel.creatChart(STALTAEHZ, STAEHZLTA, "z", 0, Color.Yellow, VA1);
+            //VA1.Visible = false;
         }
         #region MouseClickEvents
         private void STALTAEHE_MouseClick(object sender, MouseEventArgs e)

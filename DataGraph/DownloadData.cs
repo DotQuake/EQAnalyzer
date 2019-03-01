@@ -53,28 +53,40 @@ namespace DataGraph
             //create the constructor with post type and few data
             string website=Protocol+iptb.Text+Directory;
             statuslabel.Text = "Connecting: "+website;
-            MyWebRequest(website, "GET", "location=" + location + "&month=" + month + "&day=" + day + "&year=" + year + "&hour=" + hour + "&minute=" + minute);
-
             try
             {
+                MyWebRequest(website, "GET", "location=" + location + "&month=" + month + "&day=" + day + "&year=" + year + "&hour=" + hour + "&minute=" + minute);
                 statuslabel.Text = "Requesting Response";
                 result = GetResponse();
                 stuff = JObject.Parse(result);
-                string values = stuff["url"];
-                MessageBox.Show(values);
-                statuslabel.Text = "Downloading";
-                Uri gz = new Uri(values);
-                saveFileDialog1.FileName = decompressedFileName+".csv.gz";
-                saveFileDialog1.Filter = "GZip (*.gz)|*.gz";
-                saveFileDialog1.Title = "SAVE FILE";
-                if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (stuff["id"] != null)
                 {
-                    DownloadLocation = saveFileDialog1.FileName;
-                    wc.DownloadFileAsync(gz, DownloadLocation);
-                    wc.DownloadFileCompleted += new AsyncCompletedEventHandler(FileDownloadComplete);
+                    string values = stuff["url"];
+                    MessageBox.Show(values);
+                    statuslabel.Text = "Downloading";
+                    Uri gz = new Uri(values);
+                    saveFileDialog1.FileName = decompressedFileName + ".csv.gz";
+                    saveFileDialog1.Filter = "GZip (*.gz)|*.gz";
+                    saveFileDialog1.Title = "SAVE FILE";
+                    if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        DownloadLocation = saveFileDialog1.FileName;
+                        wc.DownloadFileAsync(gz, DownloadLocation);
+                        wc.DownloadFileCompleted += new AsyncCompletedEventHandler(FileDownloadComplete);
+                    }
                 }
-            }catch(ArgumentNullException){
+                else
+                {
+                    statuslabel.Text = "Nothing Found in the Server";
+                }
+            }
+            catch (ArgumentNullException)
+            {
                 statuslabel.Text = "Nothing Found in the Server";
+            }
+            catch (WebException)
+            {
+                statuslabel.Text = "Failed to connect to the sever!";
             }
         }
         #endregion
@@ -100,8 +112,8 @@ namespace DataGraph
         void FileProgressDownload(object sender, DownloadProgressChangedEventArgs e)
         {
 
-            progressBar1.Maximum = (int)e.TotalBytesToReceive / 100;
-            progressBar1.Value = (int)e.BytesReceived / 100;
+            //progressBar1.Maximum = (int)e.TotalBytesToReceive / 100;
+            //progressBar1.Value = (int)e.BytesReceived / 100;
             
 
         }
@@ -252,5 +264,33 @@ namespace DataGraph
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
         #endregion
+
+        private void open_Click(object sender, EventArgs e)
+        {
+            locationcbx.Items.Clear();
+            //create the constructor with post type and few data
+            string website = Protocol + iptb.Text + "/data/api/getdatalocation.php";
+            statuslabel.Text = "Connecting: " + website;
+            try
+            {
+                MyWebRequest(website, "GET", "");
+                result = GetResponse();
+                JObject rss = JObject.Parse(result);
+                JArray item = (JArray)rss["location"];
+                foreach (string s in item)
+                {
+                    locationcbx.Items.Add(s);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                statuslabel.Text = "Nothing Found in the Server";
+            }
+            catch (WebException)
+            {
+                statuslabel.Text = "Failure to Connect to the Server";
+            }
+            statuslabel.Text = "Generate Complete!";
+        }
     }
 }

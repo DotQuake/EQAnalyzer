@@ -255,7 +255,7 @@ namespace EarthquakeGraph
             double ave = 0;
             for (int x = 0; x < input.Count; x++)
             {
-                ave = Math.Abs(input[x]);
+               // ave = Math.Abs(input[x]);
                 buffs.Enqueue(Math.Abs(input[x]));
                 if (buffs.Count >= period)
                 {
@@ -353,7 +353,7 @@ namespace EarthquakeGraph
             List<double> holder = new List<double>();
             for (int x = (int)pw; x < sw; x++)
             {
-                holder.Add(axis[x]);
+                holder.Add(Math.Abs(axis[x]));
             }
             double volts = 0;
             double g = 0;
@@ -426,27 +426,30 @@ namespace EarthquakeGraph
             }
             for (int x = Convert.ToInt32(start); x < finish; x++)
             {
-                if (EHN[x] > 0 && EHE[x] > 0)
+                if (Math.Abs(EHE[x]) > 150 && Math.Abs(EHN[x]) > 150)
                 {
-                    angle = Math.Atan(EHN[x] / EHE[x]);
-                    deg = (int)Math.Round((angle * 180) / Math.PI);
+                    if (EHN[x] > 0 && EHE[x] > 0)
+                    {
+                        angle = Math.Atan(EHN[x] / EHE[x]);
+                        deg = (int)Math.Round((angle * 180) / Math.PI);
+                    }
+                    else if (EHE[x] < 0)
+                    {
+                        angle = Math.Atan(EHN[x] / EHE[x]);
+                        deg = (int)Math.Round((angle * 180) / Math.PI);
+                        deg += 180;
+                    }
+                    else if (EHN[x] < 0 && EHE[x] > 0)
+                    {
+                        angle = Math.Atan(EHN[x] / EHE[x]);
+                        deg = (int)Math.Round((angle * 180) / Math.PI);
+                        deg += 360;
+                    }
+                    else
+                        deg = 0;
+                    deg = EHZ[x] > 0 ? deg : Math.Abs(180 - deg);
+                    degree[deg]++;
                 }
-                else if (EHE[x] < 0)
-                {
-                    angle = Math.Atan(EHN[x] / EHE[x]);
-                    deg = (int)Math.Round((angle * 180) / Math.PI);
-                    deg += 180;
-                }
-                else if (EHN[x] < 0 && EHE[x] > 0)
-                {
-                    angle = Math.Atan(EHN[x] / EHE[x]);
-                    deg = (int)Math.Round((angle * 180) / Math.PI);
-                    deg += 360;
-                }
-                else
-                    deg = 0;
-                deg = EHZ[x] > 0 ? deg : Math.Abs(180-deg);
-                degree[deg]++;
             }
             
             for (int x = 0; x <= 360; x++)
