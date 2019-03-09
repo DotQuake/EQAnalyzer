@@ -459,10 +459,11 @@ namespace EarthquakeGraph
                     }
                     else
                         deg = 0;
-                    wat += "\nx: " + EHE[index] + "\n y: " + EHN[index];
+                    wat += "\nx: " + EHE[index] + "\n y: " + EHN[index] + "\n z: " + EHZ[index];
                     wat += "\ndegree of phone: " + degreePhone;
-                    deg2 = EHZ[index] < 0 ? deg : Math.Abs(360 - deg);
-                    wat += "\nAccelerometer calc: " + deg2;
+                    wat += "\nAccelerometer without z: " + deg;
+                    deg2 = EHZ[index] > 0 ? deg : Math.Abs(360 - deg);
+                    wat += "\nAccelerometer with z: " + deg2;
                     deg2 = (int)(degreePhone - deg2);
                     wat += "\nCalculated with phone: " + deg2;
             return wat;

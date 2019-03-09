@@ -266,6 +266,7 @@ namespace DataGraph
         private void testV2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show(eq.calculateDirection(EHE, EHN, EHZ, xp, xs, degree));
+            test_direction.Enabled = false;
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -297,7 +298,9 @@ namespace DataGraph
 
         private void EHEchart_AnnotationPositionChanging(object sender, AnnotationPositionChangingEventArgs e)
         {
+            header.Text = stationID + ".EHZ. " + date + "  " + hourmin.ToString() + "  " + timesec.ToString() + "  " + sps.ToString() + "sps" + "/\t EHE: " + EHE[listX] + " EHN: " + EHN[listX] + " EHZ: " + EHZ[listX];
             RA.Text = ((listX / sps) % 60).ToString();
+            RA.X = e.NewLocationX;
             listX = (int)e.NewLocationX;
             RA.Y = -EHZ.Min();  
             RA.X = e.NewLocationX;
@@ -345,6 +348,9 @@ namespace DataGraph
             SwaveY.X = 0;
             PwaveZ.X = 0;
             SwaveZ.X = 0;
+            xs = 0;
+            xp = 0;
+            listX = 0;
             EHEchart.Update();
             EHNchart.Update();
             EHZchart.Update();
@@ -463,6 +469,36 @@ namespace DataGraph
         {
 
         }
+        private void EHEchart_SelectionRangeChanging(object sender, CursorEventArgs e)
+        {
+            xp = EHEchart.ChartAreas[0].CursorX.SelectionStart;
+            xs = EHEchart.ChartAreas[0].CursorX.SelectionEnd;
+            test_direction.Enabled = true;
+            statuses.Text = "Start: " + xp + "\tFinish: " + xs;
+        }
+
+        private void EHNchart_SelectionRangeChanging(object sender, CursorEventArgs e)
+        {
+            xp = EHNchart.ChartAreas[0].CursorX.SelectionStart;
+            xs = EHNchart.ChartAreas[0].CursorX.SelectionEnd;
+            test_direction.Enabled = true;
+            statuses.Text = "Start: " + xp + "\tFinish: " + xs;
+        }
+
+        private void EHZchart_SelectionRangeChanging(object sender, CursorEventArgs e)
+        {
+            xp = EHZchart.ChartAreas[0].CursorX.SelectionStart;
+            xs = EHZchart.ChartAreas[0].CursorX.SelectionEnd;
+            test_direction.Enabled = true;
+            statuses.Text = "Start: " + xp + "\tFinish: " + xs;
+        }
+        private void EHNchart_SelectionRangeChanged(object sender, CursorEventArgs e)
+        {
+            //MessageBox.Show(xp + " " + xs);
+        }
+
+
+       
         
     }
 }

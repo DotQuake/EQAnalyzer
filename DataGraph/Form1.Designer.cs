@@ -100,7 +100,7 @@
             this.EHEchart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.EHEchart.Legends.Add(legend1);
-            this.EHEchart.Location = new System.Drawing.Point(0, 536);
+            this.EHEchart.Location = new System.Drawing.Point(1, 16);
             this.EHEchart.Margin = new System.Windows.Forms.Padding(1);
             this.EHEchart.Name = "EHEchart";
             series1.ChartArea = "ChartArea1";
@@ -111,6 +111,8 @@
             this.EHEchart.TabIndex = 6;
             this.EHEchart.Text = "chart1";
             this.EHEchart.Visible = false;
+            this.EHEchart.SelectionRangeChanging += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.CursorEventArgs>(this.EHEchart_SelectionRangeChanging);
+            this.EHEchart.SelectionRangeChanged += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.CursorEventArgs>(this.EHNchart_SelectionRangeChanged);
             this.EHEchart.AnnotationPositionChanged += new System.EventHandler(this.EHZchart_AnnotationPositionChanged);
             this.EHEchart.AnnotationPositionChanging += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.AnnotationPositionChangingEventArgs>(this.EHEchart_AnnotationPositionChanging);
             // 
@@ -123,7 +125,7 @@
             this.EHNchart.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.EHNchart.Legends.Add(legend2);
-            this.EHNchart.Location = new System.Drawing.Point(1, 11);
+            this.EHNchart.Location = new System.Drawing.Point(1, 273);
             this.EHNchart.Margin = new System.Windows.Forms.Padding(1);
             this.EHNchart.Name = "EHNchart";
             series2.ChartArea = "ChartArea1";
@@ -134,6 +136,8 @@
             this.EHNchart.TabIndex = 6;
             this.EHNchart.Text = "chart1";
             this.EHNchart.Visible = false;
+            this.EHNchart.SelectionRangeChanging += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.CursorEventArgs>(this.EHNchart_SelectionRangeChanging);
+            this.EHNchart.SelectionRangeChanged += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.CursorEventArgs>(this.EHNchart_SelectionRangeChanged);
             this.EHNchart.AnnotationPositionChanged += new System.EventHandler(this.EHZchart_AnnotationPositionChanged);
             this.EHNchart.AnnotationPositionChanging += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.AnnotationPositionChangingEventArgs>(this.EHEchart_AnnotationPositionChanging);
             // 
@@ -146,7 +150,7 @@
             this.EHZchart.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
             this.EHZchart.Legends.Add(legend3);
-            this.EHZchart.Location = new System.Drawing.Point(0, 268);
+            this.EHZchart.Location = new System.Drawing.Point(1, 530);
             this.EHZchart.Margin = new System.Windows.Forms.Padding(1);
             this.EHZchart.Name = "EHZchart";
             series3.ChartArea = "ChartArea1";
@@ -157,6 +161,8 @@
             this.EHZchart.TabIndex = 6;
             this.EHZchart.Text = "chart1";
             this.EHZchart.Visible = false;
+            this.EHZchart.SelectionRangeChanging += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.CursorEventArgs>(this.EHZchart_SelectionRangeChanging);
+            this.EHZchart.SelectionRangeChanged += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.CursorEventArgs>(this.EHNchart_SelectionRangeChanged);
             this.EHZchart.AnnotationPositionChanged += new System.EventHandler(this.EHZchart_AnnotationPositionChanged);
             this.EHZchart.AnnotationPositionChanging += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.AnnotationPositionChangingEventArgs>(this.EHEchart_AnnotationPositionChanging);
             // 
