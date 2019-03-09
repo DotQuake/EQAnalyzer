@@ -98,7 +98,6 @@
     <Compile Include="STALTA.Designer.cs">
       <DependentUpon>STALTA.cs</DependentUpon>
     </Compile>
-    <Compile Include="StaticData.cs" />
     <EmbeddedResource Include="DownloadData.resx">
       <DependentUpon>DownloadData.cs</DependentUpon>
     </EmbeddedResource>

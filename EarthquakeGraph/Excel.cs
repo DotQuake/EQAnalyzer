@@ -29,7 +29,6 @@ namespace EarthquakeGraph
         private string date;
         private string stationID;
         private string path = "";
-        private bool choose = true;
 
         _Application excel = new _Excel.Application();
         private Workbook wb;
@@ -38,11 +37,6 @@ namespace EarthquakeGraph
 
         #region SETTERS AND GETTERS
 
-        /// <summary>
-        /// True for EQAnalyzer format
-        /// False for Phivolcs format
-        /// </summary>
-        public bool Choose { get { return choose; } set { choose = value; } }
         /// <summary>
         /// Samples per second
         /// </summary>
@@ -143,11 +137,11 @@ namespace EarthquakeGraph
         /// </summary>
         public void readOtherData()
         {
-            sps = Convert.ToInt16(getSamplesPerSecond(choose));
-            seconds = Convert.ToDouble(getSecond(choose));
-            stationID = getStationID(choose);
-            hours = Convert.ToInt16(getHourMin(choose));
-            date = getDate(choose);
+            sps = Convert.ToInt16(getSamplesPerSecond());
+            seconds = Convert.ToDouble(getSecond());
+            stationID = getStationID();
+            hours = Convert.ToInt16(getHourMin());
+            date = getDate();
             //this.longitude = Convert.ToDouble(getLongitude());
             //this.latitude = Convert.ToDouble(getLatitude());
             //this.compassVal = Convert.ToDouble(getCompassValue());
@@ -220,68 +214,43 @@ namespace EarthquakeGraph
         /// <param name="axis">The chosen axis</param>
         /// <param name="choose">True for EQAnal format: False for Phivolcs format</param>
         /// <returns>Returns list of double values </returns>
-        public List<double> getAxis(int axis, bool choose)
+        public List<double> getAxis(int axis)
         {
             double average = 0;
-            if (!choose)
+            switch (axis)
             {
-                switch (axis)
-                {
-                    case 1:
+                case 1:
+                    {
+                        average = EHE.Average();
+                        for (int x = 0; x < EHE.Count; x++)
                         {
-                            average = EHE.Average();
-                            for (int x = 0; x < EHE.Count; x++)
-                            {
-                                EHE[x] = Math.Round(EHE[x] - average);
-                            }
-
-                            return EHE;
+                            EHE[x] = Math.Round(EHE[x] - average);
                         }
 
-                    case 2:
-                        {
-                            average = EHN.Average();
-                            for (int x = 0; x < EHN.Count; x++)
-                            {
-                                EHN[x] = Math.Round(EHN[x] - average);
-                            }
-                            return EHN;
-                        }
+                        return EHE;
+                    }
 
-                    case 3:
+                case 2:
+                    {
+                        average = EHN.Average();
+                        for (int x = 0; x < EHN.Count; x++)
                         {
-                            average = EHZ.Average();
-                            for (int x = 0; x < EHZ.Count; x++)
-                            {
-                                EHZ[x] = Math.Round(EHZ[x] - average);
-                            }
-                            return EHZ;
+                            EHN[x] = Math.Round(EHN[x] - average);
                         }
-                    default:
-                        return null;
-                }
-            }
-            else
-            {
-                switch (axis)
-                {
-                    case 1:
-                        {
-                            return EHE;
-                        }
+                        return EHN;
+                    }
 
-                    case 2:
+                case 3:
+                    {
+                        average = EHZ.Average();
+                        for (int x = 0; x < EHZ.Count; x++)
                         {
-                            return EHN;
+                            EHZ[x] = Math.Round(EHZ[x] - average);
                         }
-
-                    case 3:
-                        {
-                            return EHZ;
-                        }
-                    default:
-                        return null;
-                }
+                        return EHZ;
+                    }
+                default:
+                    return null;
             }
         }
         /// <summary>
@@ -296,72 +265,54 @@ namespace EarthquakeGraph
         /// </summary>
         /// <param name="choose">True for EQAnal format: False for Phivolcs format</param>
         /// <returns>Returns the value inside the cell in string format</returns>
-        public string getStationID(bool choose)
+        public string getStationID()
         {
-            if(choose)
-                return ReadCell(17, 1);
-            else
-                return ReadCell(14, 1);
+            return ReadCell(14, 1);
         }
         /// <summary>
         /// Gets the date recorded in the CSV file
         /// </summary>
         /// <param name="choose">True for EQAnal format: False for Phivolcs format</param>
         /// <returns>Returns the value inside the cell in string format</returns>
-        public string getDate(bool choose)
+        public string getDate()
         {
-            if(choose)
-                return ReadCell(20, 1);
-            else
-                return ReadCell(17, 1);
+            return ReadCell(17, 1);
         }
         /// <summary>
         /// Gets the hour and minute in the CSV file
         /// </summary>
         /// <param name="choose">True for EQAnal format: False for Phivolcs format</param>
         /// <returns>Returns the value inside the cell in string format</returns>
-        public string getHourMin(bool choose)
+        public string getHourMin()
         {
-            if(choose)
-                return ReadCell(21, 1);
-            else
-                return ReadCell(18, 1);
+            return ReadCell(18, 1);
         }
         /// <summary>
         /// Gets the second in the CSV file
         /// </summary>
         /// <param name="choose">True for EQAnal format: False for Phivolcs format</param>
         /// <returns>Returns the value inside the cell in string format</returns>
-        public string getSecond(bool choose)
+        public string getSecond()
         {
-            if(choose)
-                return ReadCell(22, 1);
-            else
-                return ReadCell(19, 1);
+            return ReadCell(19, 1);
         }
         /// <summary>
         /// Gets the SPS in the CSV file
         /// </summary>
         /// <param name="choose">True for EQAnal format: False for Phivolcs format</param>
         /// <returns>Returns the value inside the cell in string format</returns>
-        public string getSamplesPerSecond(bool choose)
+        public string getSamplesPerSecond( )
         {
-            if(choose)
-                return ReadCell(23, 1);
-            else
-                return ReadCell(20, 1);
+            return ReadCell(20, 1);
         }
         /// <summary>
         /// Gets the Longitude in the CSV file
         /// </summary>
         /// <param name="choose">True for EQAnal format. Only for EQAnal format</param>
         /// <returns>Returns the value inside the cell in string format</returns>
-        public string getLongitude(bool choose)
+        public string getLongitude()
         {
-            if(choose)
-                return ReadCell(13, 2);
-            else
-                return "";
+            return ReadCell(9, 3);
         }
         /// <summary>
         /// Gets the Latitude in the CSV file
@@ -370,10 +321,7 @@ namespace EarthquakeGraph
         /// <returns>Returns the value inside the cell in string format</returns>
         public string getLatitude(bool choose)
         {
-            if(choose)
-                return ReadCell(14, 2);
-            else
-                return "";
+            return ReadCell(10, 3);
         }
         /// <summary>
         /// Gets the degree orientation in the CSV file
@@ -382,10 +330,7 @@ namespace EarthquakeGraph
         /// <returns>Returns the value inside the cell in string format</returns>
         public string getCompassValue(bool choose)
         {
-            if(choose)
-                return ReadCell(15, 2);
-            else
-                return "";
+            return ReadCell(11, 3);
         }
         
         #endregion
@@ -414,7 +359,7 @@ namespace EarthquakeGraph
             line.Visible = true;
             line.Width = 1;
             line.X = 0;
-            line.ClipToChartArea = axis;
+            //line.ClipToChartArea = axis;
 
             chart.AxisX.IntervalType = DateTimeIntervalType.Number;
             chart.AxisX.LabelStyle.Format = "";

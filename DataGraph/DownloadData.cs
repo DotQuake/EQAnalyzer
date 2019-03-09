@@ -42,12 +42,12 @@ namespace DataGraph
         private void downloadbtn1_Click(object sender, EventArgs e)
         {
             //get values
-            string location = (string)locationcbx.SelectedItem;
-            string month = (string)monthcbx.SelectedItem;
-            string day = (string)daycbx.SelectedItem;
-            string year = (string)yearcbx.SelectedItem;
-            string hour = (string)hourcbx.SelectedItem;
-            string minute = (string)minutecbx.SelectedItem;
+            string location = (string)locationcbx.Text;
+            string month = (string)monthcbx.Text;
+            string day = (string)daycbx.Text;
+            string year = (string)yearcbx.Text;
+            string hour = (string)hourcbx.Text;
+            string minute = (string)minutecbx.Text;
             decompressedFileName = year + "-" + month + "-" + day + "-" + hour + "-" + minute;
 
             //create the constructor with post type and few data
@@ -243,6 +243,7 @@ namespace DataGraph
                 decompressingStream.Close();
                 sourceFileStream.Close();
                 destFileStream.Close();
+                this.Close();
             }
             catch (FileNotFoundException)
             {

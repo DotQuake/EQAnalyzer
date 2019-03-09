@@ -118,7 +118,7 @@
             this.locationcbx.Items.AddRange(new object[] {
             "Lapulapu"});
             this.locationcbx.Location = new System.Drawing.Point(127, 76);
-            this.locationcbx.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.locationcbx.Margin = new System.Windows.Forms.Padding(4);
             this.locationcbx.Name = "locationcbx";
             this.locationcbx.Size = new System.Drawing.Size(264, 24);
             this.locationcbx.TabIndex = 6;
@@ -141,7 +141,7 @@
             "11",
             "12"});
             this.monthcbx.Location = new System.Drawing.Point(127, 114);
-            this.monthcbx.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.monthcbx.Margin = new System.Windows.Forms.Padding(4);
             this.monthcbx.Name = "monthcbx";
             this.monthcbx.Size = new System.Drawing.Size(53, 24);
             this.monthcbx.TabIndex = 7;
@@ -183,7 +183,7 @@
             "30",
             "31"});
             this.daycbx.Location = new System.Drawing.Point(253, 114);
-            this.daycbx.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.daycbx.Margin = new System.Windows.Forms.Padding(4);
             this.daycbx.Name = "daycbx";
             this.daycbx.Size = new System.Drawing.Size(73, 24);
             this.daycbx.TabIndex = 8;
@@ -200,7 +200,7 @@
             "2021",
             "2022"});
             this.yearcbx.Location = new System.Drawing.Point(383, 114);
-            this.yearcbx.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.yearcbx.Margin = new System.Windows.Forms.Padding(4);
             this.yearcbx.Name = "yearcbx";
             this.yearcbx.Size = new System.Drawing.Size(69, 24);
             this.yearcbx.TabIndex = 9;
@@ -236,7 +236,7 @@
             "23",
             "24"});
             this.hourcbx.Location = new System.Drawing.Point(127, 164);
-            this.hourcbx.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.hourcbx.Margin = new System.Windows.Forms.Padding(4);
             this.hourcbx.Name = "hourcbx";
             this.hourcbx.Size = new System.Drawing.Size(75, 24);
             this.hourcbx.TabIndex = 10;
@@ -307,7 +307,7 @@
             "58",
             "59"});
             this.minutecbx.Location = new System.Drawing.Point(271, 164);
-            this.minutecbx.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.minutecbx.Margin = new System.Windows.Forms.Padding(4);
             this.minutecbx.Name = "minutecbx";
             this.minutecbx.Size = new System.Drawing.Size(75, 24);
             this.minutecbx.TabIndex = 11;
@@ -317,7 +317,7 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar1.Location = new System.Drawing.Point(277, 294);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(4);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(203, 17);
             this.progressBar1.TabIndex = 14;
@@ -325,7 +325,7 @@
             // downloadbtn1
             // 
             this.downloadbtn1.Location = new System.Drawing.Point(32, 209);
-            this.downloadbtn1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.downloadbtn1.Margin = new System.Windows.Forms.Padding(4);
             this.downloadbtn1.Name = "downloadbtn1";
             this.downloadbtn1.Size = new System.Drawing.Size(213, 66);
             this.downloadbtn1.TabIndex = 15;
@@ -366,7 +366,7 @@
             // 
             this.iptb.Enabled = false;
             this.iptb.Location = new System.Drawing.Point(129, 39);
-            this.iptb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.iptb.Margin = new System.Windows.Forms.Padding(4);
             this.iptb.Name = "iptb";
             this.iptb.Size = new System.Drawing.Size(229, 22);
             this.iptb.TabIndex = 18;
@@ -375,7 +375,7 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(368, 42);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(54, 21);
             this.checkBox1.TabIndex = 19;
@@ -387,9 +387,9 @@
             // 
             this.open.Location = new System.Drawing.Point(398, 76);
             this.open.Name = "open";
-            this.open.Size = new System.Drawing.Size(75, 23);
+            this.open.Size = new System.Drawing.Size(82, 23);
             this.open.TabIndex = 20;
-            this.open.Text = "open";
+            this.open.Text = "Generate";
             this.open.UseVisualStyleBackColor = true;
             this.open.Click += new System.EventHandler(this.open_Click);
             // 
@@ -417,7 +417,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DownloadData";
             this.Text = "Design 2";
             this.Load += new System.EventHandler(this.Design2Form1_Load);

@@ -20,9 +20,9 @@ namespace DataGraph
         List<double> STAEHELTA;
         List<double> STAEHNLTA;
         List<double> STAEHZLTA;
-        Excel excel = new Excel();
         EarthquakeAnalyzer eq = new EarthquakeAnalyzer();
-        System.Drawing.Point? prevPosition = null;
+        ChartControl chartControl = new ChartControl();
+        //System.Drawing.Point? prevPosition = null;
         ToolTip tooltip = new ToolTip();
         public STALTA(List<double> EHESTALTA, List<double> EHNSTALTA, List<double> EHZSTALTA)
         {
@@ -36,96 +36,11 @@ namespace DataGraph
         {
             WindowState = FormWindowState.Maximized;
             
-            excel.creatChart(STALTAEHE, STAEHELTA, "x", 0, Color.Black, VA1);
-            excel.creatChart(STALTAEHN, STAEHNLTA, "y", 0, Color.Pink, VA1);
-            excel.creatChart(STALTAEHZ, STAEHZLTA, "z", 0, Color.Yellow, VA1);
+            chartControl.createChart(STALTAEHE, STAEHELTA, "x", 0, Color.Black);
+            chartControl.createChart(STALTAEHN, STAEHNLTA, "y", 0, Color.Pink);
+            chartControl.createChart(STALTAEHZ, STAEHZLTA, "z", 0, Color.Yellow);
             //VA1.Visible = false;
         }
-        #region MouseClickEvents
-        private void STALTAEHE_MouseClick(object sender, MouseEventArgs e)
-        {
-            var pos = e.Location;
-            if (prevPosition.HasValue && pos == (System.Drawing.Point)prevPosition.Value)
-                return;
-            tooltip.RemoveAll();
-            prevPosition = pos;
-            var results = STALTAEHE.HitTest(pos.X, pos.Y, false, ChartElementType.DataPoint);
-
-            foreach (var result in results)
-            {
-                var prop = result.Object as DataPoint;
-                if (prop != null)
-                {
-                    var pointXPixel = result.ChartArea.AxisX.ValueToPixelPosition(prop.XValue);
-                    var pointYPixel = result.ChartArea.AxisY.ValueToPixelPosition(prop.YValues[0]);
-
-                    //check if cursor is 2 pixels close to point
-                    if (Math.Abs(pos.X - pointXPixel) < 2 && Math.Abs(pos.Y - pointYPixel) < 2)
-                    {
-
-                        tooltip.Show(prop.YValues[0].ToString(), this.STALTAEHE, pos.X, pos.Y - 15);
-                        test.Text = prop.YValues[0].ToString() + " " + STAEHELTA[(int)prop.XValue].ToString() + " " + STAEHNLTA[(int)prop.XValue].ToString();
-                    }
-                }
-            }
-        }
-
-        private void STALTAEHN_MouseClick(object sender, MouseEventArgs e)
-        {
-            var pos = e.Location;
-            //double posx = 0;
-            if (prevPosition.HasValue && pos == (System.Drawing.Point)prevPosition.Value)
-                return;
-            tooltip.RemoveAll();
-            prevPosition = pos;
-            var results = STALTAEHN.HitTest(pos.X, pos.Y, false, ChartElementType.DataPoint);
-
-            foreach (var result in results)
-            {
-                var prop = result.Object as DataPoint;
-                if (prop != null)
-                {
-                    var pointXPixel = result.ChartArea.AxisX.ValueToPixelPosition(prop.XValue);
-                    var pointYPixel = result.ChartArea.AxisY.ValueToPixelPosition(prop.YValues[0]);
-
-                    //check if cursor is 2 pixels close to point
-                    if (Math.Abs(pos.X - pointXPixel) < 2 && Math.Abs(pos.Y - pointYPixel) < 2)
-                    {
-
-                        tooltip.Show(prop.YValues[0].ToString(), this.STALTAEHN, pos.X, pos.Y - 15);
-                    }
-                }
-            }
-        }
-
-        private void STALTAEHZ_MouseClick(object sender, MouseEventArgs e)
-        {
-            var pos = e.Location;
-            //double posx = 0;
-            if (prevPosition.HasValue && pos == (System.Drawing.Point)prevPosition.Value)
-                return;
-            tooltip.RemoveAll();
-            prevPosition = pos;
-            var results = STALTAEHZ.HitTest(pos.X, pos.Y, false, ChartElementType.DataPoint);
-
-            foreach (var result in results)
-            {
-                var prop = result.Object as DataPoint;
-                if (prop != null)
-                {
-                    var pointXPixel = result.ChartArea.AxisX.ValueToPixelPosition(prop.XValue);
-                    var pointYPixel = result.ChartArea.AxisY.ValueToPixelPosition(prop.YValues[0]);
-
-                    //check if cursor is 2 pixels close to point
-                    if (Math.Abs(pos.X - pointXPixel) < 2 && Math.Abs(pos.Y - pointYPixel) < 2)
-                    {
-
-                        tooltip.Show(prop.YValues[0].ToString(), this.STALTAEHZ, pos.X, pos.Y - 15);
-                    }
-                }
-            }
-        }
-        #endregion
-
+       
     }
 }
