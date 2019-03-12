@@ -463,7 +463,7 @@ namespace EarthquakeGraph
                     {
                         angle = Math.Atan(EHN[index] / EHE[index]);
                         deg = (int)Math.Round((angle * 180) / Math.PI);
-                        deg += 360;
+                        
                     }
                     else if (EHE[index] < 0)
                     {
@@ -475,7 +475,7 @@ namespace EarthquakeGraph
                     {
                         angle = Math.Atan(EHN[index] / EHE[index]);
                         deg = (int)Math.Round((angle * 180) / Math.PI);
-                       
+                        deg += 360;
                     }
                     else
                         deg = 0;
@@ -484,7 +484,8 @@ namespace EarthquakeGraph
                     wat += "\nAccelerometer without z: " + deg;
                     deg2 = EHZ[index] > 0 ? deg : Math.Abs(360 - deg);
                     wat += "\nAccelerometer with z: " + deg2;
-                    deg2 = (int)(degreePhone - deg2);
+                    deg2 = (int)((degreePhone - deg2)%360);
+                    deg2 = deg2 < 0 ? 360 + deg2 : deg2;
                     wat += "\nCalculated with phone: " + deg2;
             return wat;
         }

@@ -619,6 +619,11 @@ namespace DataGraph
             backgroundWorker1.ReportProgress(100);
         }
 
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
        
         
