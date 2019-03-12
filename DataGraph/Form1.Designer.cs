@@ -68,6 +68,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.test_magnitude = new System.Windows.Forms.Button();
             this.test_direction = new System.Windows.Forms.Button();
+            this.zoom_minus = new System.Windows.Forms.Button();
+            this.zoom_plus = new System.Windows.Forms.Button();
             this.sWaveBtn = new System.Windows.Forms.Button();
             this.pWaveBtn = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -100,14 +102,14 @@
             this.EHEchart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.EHEchart.Legends.Add(legend1);
-            this.EHEchart.Location = new System.Drawing.Point(1, 16);
+            this.EHEchart.Location = new System.Drawing.Point(20, 16);
             this.EHEchart.Margin = new System.Windows.Forms.Padding(1);
             this.EHEchart.Name = "EHEchart";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.EHEchart.Series.Add(series1);
-            this.EHEchart.Size = new System.Drawing.Size(1815, 255);
+            this.EHEchart.Size = new System.Drawing.Size(1743, 255);
             this.EHEchart.TabIndex = 6;
             this.EHEchart.Text = "chart1";
             this.EHEchart.Visible = false;
@@ -125,14 +127,14 @@
             this.EHNchart.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.EHNchart.Legends.Add(legend2);
-            this.EHNchart.Location = new System.Drawing.Point(1, 273);
+            this.EHNchart.Location = new System.Drawing.Point(20, 273);
             this.EHNchart.Margin = new System.Windows.Forms.Padding(1);
             this.EHNchart.Name = "EHNchart";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.EHNchart.Series.Add(series2);
-            this.EHNchart.Size = new System.Drawing.Size(1815, 255);
+            this.EHNchart.Size = new System.Drawing.Size(1743, 255);
             this.EHNchart.TabIndex = 6;
             this.EHNchart.Text = "chart1";
             this.EHNchart.Visible = false;
@@ -150,14 +152,14 @@
             this.EHZchart.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
             this.EHZchart.Legends.Add(legend3);
-            this.EHZchart.Location = new System.Drawing.Point(1, 530);
+            this.EHZchart.Location = new System.Drawing.Point(20, 530);
             this.EHZchart.Margin = new System.Windows.Forms.Padding(1);
             this.EHZchart.Name = "EHZchart";
             series3.ChartArea = "ChartArea1";
             series3.Legend = "Legend1";
             series3.Name = "Series1";
             this.EHZchart.Series.Add(series3);
-            this.EHZchart.Size = new System.Drawing.Size(1815, 255);
+            this.EHZchart.Size = new System.Drawing.Size(1743, 255);
             this.EHZchart.TabIndex = 6;
             this.EHZchart.Text = "chart1";
             this.EHZchart.Visible = false;
@@ -379,6 +381,8 @@
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.test_magnitude);
             this.groupBox1.Controls.Add(this.test_direction);
+            this.groupBox1.Controls.Add(this.zoom_minus);
+            this.groupBox1.Controls.Add(this.zoom_plus);
             this.groupBox1.Controls.Add(this.sWaveBtn);
             this.groupBox1.Controls.Add(this.pWaveBtn);
             this.groupBox1.Location = new System.Drawing.Point(0, 27);
@@ -400,7 +404,7 @@
             // test_magnitude
             // 
             this.test_magnitude.Enabled = false;
-            this.test_magnitude.Location = new System.Drawing.Point(280, 15);
+            this.test_magnitude.Location = new System.Drawing.Point(364, 15);
             this.test_magnitude.Name = "test_magnitude";
             this.test_magnitude.Size = new System.Drawing.Size(127, 33);
             this.test_magnitude.TabIndex = 0;
@@ -411,13 +415,33 @@
             // test_direction
             // 
             this.test_direction.Enabled = false;
-            this.test_direction.Location = new System.Drawing.Point(159, 15);
+            this.test_direction.Location = new System.Drawing.Point(243, 15);
             this.test_direction.Name = "test_direction";
             this.test_direction.Size = new System.Drawing.Size(115, 33);
             this.test_direction.TabIndex = 0;
             this.test_direction.Text = "Test direction";
             this.test_direction.UseVisualStyleBackColor = true;
             this.test_direction.Click += new System.EventHandler(this.testV2ToolStripMenuItem_Click);
+            // 
+            // zoom_minus
+            // 
+            this.zoom_minus.Location = new System.Drawing.Point(201, 15);
+            this.zoom_minus.Name = "zoom_minus";
+            this.zoom_minus.Size = new System.Drawing.Size(36, 33);
+            this.zoom_minus.TabIndex = 0;
+            this.zoom_minus.Text = "-";
+            this.zoom_minus.UseVisualStyleBackColor = true;
+            this.zoom_minus.Click += new System.EventHandler(this.zoom_minus_Click);
+            // 
+            // zoom_plus
+            // 
+            this.zoom_plus.Location = new System.Drawing.Point(159, 15);
+            this.zoom_plus.Name = "zoom_plus";
+            this.zoom_plus.Size = new System.Drawing.Size(36, 33);
+            this.zoom_plus.TabIndex = 0;
+            this.zoom_plus.Text = "+";
+            this.zoom_plus.UseVisualStyleBackColor = true;
+            this.zoom_plus.Click += new System.EventHandler(this.zoom_plus_Click);
             // 
             // sWaveBtn
             // 
@@ -467,9 +491,12 @@
             // backgroundWorker1
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             // 
             // panel1
             // 
+            this.panel1.AutoScroll = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.Controls.Add(this.EHEchart);
             this.panel1.Controls.Add(this.EHNchart);
             this.panel1.Controls.Add(this.EHZchart);
@@ -561,6 +588,8 @@
         private System.Windows.Forms.Button test_magnitude;
         private System.Windows.Forms.Button test_direction;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button zoom_minus;
+        private System.Windows.Forms.Button zoom_plus;
     }
 }
 

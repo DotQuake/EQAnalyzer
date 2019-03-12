@@ -118,38 +118,17 @@ namespace EarthquakeGraph
 
         public void appendEHE(float x)
         {
-            if (this.dataSource.Equals("External"))
-            {
-                EHE.Add(x * countsToVolts);
-            }
-            else
-            {
-                EHE.Add(x);
-            }
+            EHE.Add(x);
         }
 
         public void appendEHN(float y)
         {
-            if (this.dataSource.Equals("External"))
-            {
-                EHN.Add(y * countsToVolts);
-            }
-            else
-            {
-                EHN.Add(y);
-            }
+            EHN.Add(y);
         }
 
         public void appendEHZ(float z)
         {
-            if (this.dataSource.Equals("External"))
-            {
-                EHZ.Add(z * countsToVolts);
-            }
-            else
-            {
-                EHZ.Add(z);
-            }
+            EHZ.Add(z);
         }
 
         public void setSource(String dataSource)

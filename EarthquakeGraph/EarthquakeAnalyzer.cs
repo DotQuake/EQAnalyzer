@@ -348,40 +348,59 @@ namespace EarthquakeGraph
         /// <param name="pw">P-wave of the earthquake</param>
         /// <param name="sw">S-wave of the earthquake</param>
         /// <returns>Returns the magnitude of the earthquake (LOL NO)</returns>
-        public double calculateMagnitude(List<double> axis, double start, double finish)
+        public string calculateMagnitude(List<double> EHE, List<double> EHN, List<double> EHZ , double start, double finish)
         {
-            List<double> holder = new List<double>();
-            for (int x = (int)start; x < finish; x++)
+            string watt = "";
+            double max = 0;
+            int index;
+            for (int x = Convert.ToInt32(start); x < finish; x++)
             {
-                holder.Add(Math.Abs(axis[x]));
+                if (Math.Abs(EHN[x]) > max || Math.Abs(EHE[x]) > max)
+                {
+                    if (Math.Abs(EHN[x]) > Math.Abs(EHE[x]))
+                        max = Math.Abs(EHN[x]);
+                    else
+                        max = Math.Abs(EHE[x]);
+                }
             }
+            for (int x = Convert.ToInt32(start); x < finish; x++)
+            {
+                if (Math.Abs(EHZ[x]) > max)
+                {
+                    max = Math.Abs(EHZ[x]);
+                }
+            }
+            
             double volts = 0;
             double g = 0;
             double mmi = 0;
-            volts = (counts * holder.Max());
+            volts = (counts * max);
+            watt += "\nCounts: " + max;
+            watt += "\nVoltage: " + volts+"v";
             g = volts / 1.815;
+            watt += "\nAcceleration: " + g+"g";
             if (g >= 0.0017 && g < 0.00785)
-                mmi = Math.Round(((g*2)/0.0017),1);
+                mmi = 2;
             else if (g >= 0.00785 && g < 0.014)
-                mmi = Math.Round(((g*3)/0.00785),1);
+                mmi = 3;
             else if (g >= 0.014 && g < 0.039)
-                mmi = Math.Round(((g*4)/0.014),1);
+                mmi = 4;
             else if (g >= 0.039 && g < 0.092)
-                mmi = Math.Round(((g*5)/0.039),1);
+                mmi = 5;
             else if (g >= 0.092 && g < 0.18)
-                mmi = Math.Round(((g*6)/0.092),1);
+                mmi = 6;
             else if (g >= 0.18 && g < 0.34)
-                mmi = Math.Round(((g*7)/0.18),1);
+                mmi = 7;
             else if (g >= 0.34 && g < 0.65)
-                mmi = Math.Round(((g*8)/0.34),1);
+                mmi = 8;
             else if (g >= 0.65 && g < 1.24)
-                mmi = Math.Round(((g * 9) / 0.65), 1);
+                mmi = 9;
             else if (g >= 1.24)
                 mmi = 9001;
-
-            magnitude = 1 + mmi * (2 / 3);
-
-            return magnitude;
+            watt += "\nMMI: " + mmi;
+            magnitude = 1 + (mmi * 2) / 3;
+            watt += "\nMagnitude: " + magnitude;
+            return watt;
         }
         /// <summary>
         /// Calculates the hypocenter of the earthquake
@@ -444,6 +463,7 @@ namespace EarthquakeGraph
                     {
                         angle = Math.Atan(EHN[index] / EHE[index]);
                         deg = (int)Math.Round((angle * 180) / Math.PI);
+                        deg += 360;
                     }
                     else if (EHE[index] < 0)
                     {
@@ -455,7 +475,7 @@ namespace EarthquakeGraph
                     {
                         angle = Math.Atan(EHN[index] / EHE[index]);
                         deg = (int)Math.Round((angle * 180) / Math.PI);
-                        deg += 360;
+                       
                     }
                     else
                         deg = 0;

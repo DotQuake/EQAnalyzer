@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,6 +20,7 @@ namespace DataGraph
     public partial class Form1 : Form
     {
         #region Initialize Variables
+        int mulitplier = 50;
         static VerticalLineAnnotation VA1 = new VerticalLineAnnotation();
         static VerticalLineAnnotation VA2 = new VerticalLineAnnotation();
         static VerticalLineAnnotation VA3 = new VerticalLineAnnotation();
@@ -35,10 +37,10 @@ namespace DataGraph
         public List<double> STAEHE, LTAEHE, STAEHN, LTAEHN, STAEHZ, LTAEHZ, STALTAEHE, STALTAEHN, STALTAEHZ;
         public volatile bool killThread = false;
         public double sec, timesec, hourmin, degree, longitude, latitude, magnitude, hypocenter;
-        public string stationID, date;
+        public string stationID, date, xmax, xmin, ymax, ymin, zmax, zmin;
         public bool fileOpened = false, clicked = false, psSet = false, threadbool = false;
         public double pwaveEHE, swaveEHE, pwaveEHN, swaveEHN, pwaveEHZ, swaveEHZ, holder = 0, xVal = 0, xp, xs;
-        public int sps;
+        public int sps, axis = 0;
         public int statime = 200, ltatime = 3000;
         public int listX = 0;
         string openpath = @"E:\Kiting\CSVFiles";
@@ -48,7 +50,10 @@ namespace DataGraph
         //System.Drawing.Point? prevPosition = null;
         ToolTip tooltip = new ToolTip();
         //Thread thread1, thread2, thread3;
-       
+        String timeee = "";
+        Stopwatch stopwatch = new Stopwatch();
+        const int max = 3;
+
         #endregion
 
         CSVRetreiver CSVR = new CSVRetreiver();
@@ -58,6 +63,9 @@ namespace DataGraph
         public Form1()
         {
             InitializeComponent();
+            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+            backgroundWorker1.ProgressChanged += backgroundWorker1_ProgressChanged;
+            backgroundWorker1.WorkerReportsProgress = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -152,15 +160,27 @@ namespace DataGraph
 
         #endregion
 
-        
+        private void call_back(int i)
+        {
+            if (i == 0)
+                thread1();
+            else if (i == 1)
+                thread2();
+            else if (i == 2)
+                thread3();
+            
+            System.Threading.Thread.Sleep(500);
+        }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //backgroundWorker1.RunWorkerAsync();
             loading.Maximum = 100;
             loading.Step = 1;
             loading.Value = 0;
-            backgroundWorker1.RunWorkerAsync();
             data = null;
+            stopwatch.Start();
+            System.Threading.Thread.Sleep(1000);
             OpenFileDialog opensesame = new OpenFileDialog();
             opensesame.Title = "Open csv File";
             opensesame.Filter = "CSV files|*.csv";
@@ -180,15 +200,78 @@ namespace DataGraph
                     stationID = data.getSitename();
                     initializeAll();
                     setRA();
-                    setWaveAnnotation(SwaveX, 100, EHEchart);
-                    setWaveAnnotation(SwaveY, 100, EHNchart);
-                    setWaveAnnotation(SwaveZ, 100, EHZchart);
-                    setWaveAnnotation(PwaveX, 100, EHEchart);
-                    setWaveAnnotation(PwaveY, 100, EHNchart);
-                    setWaveAnnotation(PwaveZ, 100, EHZchart);
+                    
                 }
                 catch (Exception) { MessageBox.Show("Wrong file name selected"); }
             }
+            stopwatch.Stop();
+            
+            Console.WriteLine("Opening and displaying: " + stopwatch.ElapsedMilliseconds);
+            stopwatch.Reset();
+        }
+
+        private void thread1()
+        {
+            Console.WriteLine("thread1 start");
+            
+        }
+
+        private void thread2()
+        {
+            Console.WriteLine("thread1 start");
+            
+        }
+
+        private void thread3()
+        {
+            Console.WriteLine("thread1 start");
+            
+        }
+
+        public void initializeAll()
+        {//
+            EHE = data.getEHE();
+            STALTAEHE = eq.getSTALTAratio(EHE, statime, ltatime);
+            xmax = EHE.Max().ToString();
+            xmin = EHE.Min().ToString();
+            chartControl.createChart(EHEchart, EHE, "x_axis", 0, Color.Gray, VA1);
+            setWaveAnnotation(SwaveX, 100, EHEchart);
+            setWaveAnnotation(PwaveX, 100, EHEchart);
+            //
+            EHN = data.getEHN();
+            STALTAEHN = eq.getSTALTAratio(EHN, statime, ltatime);
+            ymax = EHN.Max().ToString();
+            ymin = EHN.Min().ToString();
+            chartControl.createChart(EHNchart, EHN, "y_axis", 0, Color.Gray, VA2);
+            setWaveAnnotation(SwaveY, 100, EHNchart);
+            setWaveAnnotation(PwaveY, 100, EHNchart);
+            //
+            EHZ = data.getEHZ();
+            STALTAEHZ = eq.getSTALTAratio(EHZ, statime, ltatime);
+            zmax = EHZ.Max().ToString();
+            zmin = EHZ.Min().ToString();
+            chartControl.createChart(EHZchart, EHZ, "z_axis", 0, Color.Gray, VA3);
+            setWaveAnnotation(SwaveZ, 100, EHZchart);
+            setWaveAnnotation(PwaveZ, 100, EHZchart);
+            //
+            station1.Text = stationID;
+            x.Text = "EHE";
+            station2.Text = stationID;
+            y.Text = "EHN";
+            station3.Text = stationID;
+            z.Text = "EHZ";
+            max1.Text = xmax;
+            min1.Text = xmin;
+            max2.Text = ymax;
+            min2.Text = ymin;
+            max3.Text = zmax;
+            min3.Text = zmin;
+            date = data.getYear() + " " + data.getMonth() + " " + data.getDay();
+            hourmin = data.getMinute();
+            degree = data.getCompass();
+            longitude = data.getLongitude();
+            latitude = data.getLatitude();
+            fileOpened = true;
         }
 
         private void sTALTAToolStripMenuItem_Click(object sender, EventArgs e)
@@ -225,19 +308,19 @@ namespace DataGraph
                             if (eq.Axis == 1)
                             {
                               //  degree = eq.calculateDirection(EHE, EHN, EHZ, xp, xs, degree);
-                                magnitude = eq.calculateMagnitude(EHE, xp, xs);
+                              //  magnitude = eq.calculateMagnitude(EHE, xp, xs);
                                 hypocenter = eq.calculateHypocenter(pwaveEHE, swaveEHE, sps, sec);
                             }
                             else if (eq.Axis == 2)
                             {
                              //   degree = eq.calculateDirection(EHE, EHN, EHZ, xp, xs, degree);
-                                magnitude = eq.calculateMagnitude(EHN, xp, xs);
+                             //   magnitude = eq.calculateMagnitude(EHN, xp, xs);
                                 hypocenter = eq.calculateHypocenter(pwaveEHN, swaveEHN, sps, sec);
                             }
                             else
                             {
                                // degree = eq.calculateDirection(EHE, EHN, EHZ, xp, xs, degree);
-                                magnitude = eq.calculateMagnitude(EHZ, xp, xs);
+                              //  magnitude = eq.calculateMagnitude(EHZ, xp, xs);
                                 hypocenter = eq.calculateHypocenter(pwaveEHZ, swaveEHZ, sps, sec);
                             }
                             MessageBox.Show("Eathquake detected\nMagnitude:\t" + magnitude.ToString() + "\nDistance:\t" + "\t" + hypocenter + "km" + "\nDirection:\t" + degree + "\nAxis:\t" + eq.Axis);
@@ -260,7 +343,9 @@ namespace DataGraph
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(eq.calculateMagnitude(EHE, xp, xs).ToString());
+            MessageBox.Show(eq.calculateMagnitude(EHE,EHN,EHZ, xp, xs).ToString());
+            
+            test_magnitude.Enabled = false;
         }
 
         private void testV2ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -269,9 +354,7 @@ namespace DataGraph
             test_direction.Enabled = false;
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-        }
+        
         private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Settings set = new Settings(statime, ltatime, eq.Trigger, eq.Detrigger, openpath);
@@ -364,6 +447,7 @@ namespace DataGraph
 
         public void clearAll()
         {
+
             EHE = null;
             EHN = null;
             EHZ = null;
@@ -379,6 +463,16 @@ namespace DataGraph
             EHEchart.Series.Clear();
             EHNchart.Series.Clear();
             EHZchart.Series.Clear();
+            removeWaveAnnotation(VA1, EHEchart);
+            removeWaveAnnotation(VA2, EHNchart);
+            removeWaveAnnotation(VA3, EHZchart);
+            removeWaveAnnotation(PwaveX, EHEchart);
+            removeWaveAnnotation(SwaveX, EHEchart);
+            removeWaveAnnotation(PwaveY, EHNchart);
+            removeWaveAnnotation(SwaveY, EHNchart);
+            removeWaveAnnotation(PwaveZ, EHZchart);
+            removeWaveAnnotation(SwaveZ, EHZchart);
+            EHZchart.Annotations.Remove(RA);
             max1.Visible = true;
             max2.Visible = true;
             max3.Visible = true;
@@ -414,12 +508,7 @@ namespace DataGraph
             EHZchart.Annotations.Add(RA);
         }
 
-        public void staltaThread()
-        {
-            STALTAEHE = eq.getSTALTAratio(EHE, statime, ltatime);
-            STALTAEHN = eq.getSTALTAratio(EHN, statime, ltatime);
-            STALTAEHZ = eq.getSTALTAratio(EHZ, statime, ltatime);
-        }
+        
 
         public void setWaveAnnotation(VerticalLineAnnotation wave, int x, System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
@@ -435,35 +524,12 @@ namespace DataGraph
             chart.Update();
         }
 
-        public void initializeAll()
+        public void removeWaveAnnotation(VerticalLineAnnotation wave,  System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
-
-            station1.Text = stationID;
-            station2.Text = stationID;
-            station3.Text = stationID;
-            x.Text = "EHE";
-            y.Text = "EHN";
-            z.Text = "EHZ";
-            date = data.getYear()+" "+data.getMonth()+" "+data.getDay();
-            hourmin = data.getMinute();
-            degree = data.getCompass();
-            longitude = data.getLongitude();
-            latitude = data.getLatitude();
-            fileOpened = true;
-            EHE = data.getEHE();
-            EHN = data.getEHN();
-            EHZ = data.getEHZ();
-            staltaThread();
-            max1.Text = EHE.Max().ToString();
-            min1.Text = EHE.Max().ToString();
-            max2.Text = EHN.Max().ToString();
-            min2.Text = EHN.Max().ToString();
-            max3.Text = EHZ.Max().ToString();
-            min3.Text = EHZ.Min().ToString();
-            chartControl.createChart(EHEchart, EHE, "x_axis", 0, Color.Gray, VA1);
-            chartControl.createChart(EHNchart, EHN, "y_axis", 0, Color.Gray, VA2);
-            chartControl.createChart(EHZchart, EHZ, "z_axis", 0, Color.Gray, VA3);
+            chart.Annotations.Remove(wave);
         }
+
+        
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -471,30 +537,86 @@ namespace DataGraph
         }
         private void EHEchart_SelectionRangeChanging(object sender, CursorEventArgs e)
         {
+            axis = 0;
             xp = EHEchart.ChartAreas[0].CursorX.SelectionStart;
             xs = EHEchart.ChartAreas[0].CursorX.SelectionEnd;
             test_direction.Enabled = true;
+            test_magnitude.Enabled = true;
             statuses.Text = "Start: " + xp + "\tFinish: " + xs;
         }
 
         private void EHNchart_SelectionRangeChanging(object sender, CursorEventArgs e)
         {
+            axis = 1;
             xp = EHNchart.ChartAreas[0].CursorX.SelectionStart;
             xs = EHNchart.ChartAreas[0].CursorX.SelectionEnd;
             test_direction.Enabled = true;
+            test_magnitude.Enabled = true;
             statuses.Text = "Start: " + xp + "\tFinish: " + xs;
         }
 
         private void EHZchart_SelectionRangeChanging(object sender, CursorEventArgs e)
         {
+            axis = 2;
             xp = EHZchart.ChartAreas[0].CursorX.SelectionStart;
             xs = EHZchart.ChartAreas[0].CursorX.SelectionEnd;
             test_direction.Enabled = true;
+            test_magnitude.Enabled = true;  
             statuses.Text = "Start: " + xp + "\tFinish: " + xs;
         }
         private void EHNchart_SelectionRangeChanged(object sender, CursorEventArgs e)
         {
+            double holder = 0;
+            if (xp > xs)
+            {
+                xp = holder;
+                xp = xs;
+                xs = holder;
+            }
             //MessageBox.Show(xp + " " + xs);
+            //EHEchart.ChartAreas[0].AxisX.ScaleView.ZoomReset(1);
+            //EHNchart.ChartAreas[0].AxisX.ScaleView.ZoomReset(1);
+            //EHZchart.ChartAreas[0].AxisX.ScaleView.ZoomReset(1);
+            //EHEchart.ChartAreas[0].AxisY.ScaleView.ZoomReset(1);
+            //EHNchart.ChartAreas[0].AxisY.ScaleView.ZoomReset(1);
+            //EHZchart.ChartAreas[0].AxisY.ScaleView.ZoomReset(1);
+            statuses.Text = "Start: " + xp + "\tFinish: " + xs;
+        }
+
+        private void zoom_plus_Click(object sender, EventArgs e)
+        {
+            EHEchart.Width += mulitplier;
+            EHNchart.Width += mulitplier;
+            EHZchart.Width += mulitplier;
+        }
+
+        private void zoom_minus_Click(object sender, EventArgs e)
+        {
+            EHEchart.Width -= mulitplier;
+            EHNchart.Width -= mulitplier;
+            EHZchart.Width -= mulitplier;
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            loading.Value = e.ProgressPercentage;
+        }
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                Thread.Sleep(1000);
+                backgroundWorker1.ReportProgress(i);
+
+                //Check if there is a request to cancel the process
+                if (backgroundWorker1.CancellationPending)
+                {
+                    e.Cancel = true;
+                    backgroundWorker1.ReportProgress(0);
+                    return;
+                }
+            }
+            backgroundWorker1.ReportProgress(100);
         }
 
 
