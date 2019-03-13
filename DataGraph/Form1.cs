@@ -36,12 +36,12 @@ namespace DataGraph
         public List<double> EHE, EHN, EHZ, hold;
         public List<double> STAEHE, LTAEHE, STAEHN, LTAEHN, STAEHZ, LTAEHZ, STALTAEHE, STALTAEHN, STALTAEHZ;
         public volatile bool killThread = false;
-        public double sec, timesec, hourmin, degree, longitude, latitude, magnitude, hypocenter;
+        public double sec, timesec, hourmin, degree, longitude, latitude, magnitude, hypocenter, trgr, dtrgr;
         public string stationID, date, xmax, xmin, ymax, ymin, zmax, zmin;
         public bool fileOpened = false, clicked = false, psSet = false, threadbool = false;
         public double pwaveEHE, swaveEHE, pwaveEHN, swaveEHN, pwaveEHZ, swaveEHZ, holder = 0, xVal = 0, xp, xs;
         public int sps, axis = 0;
-        public int statime = 200, ltatime = 3000;
+        public int statime = 2, ltatime = 30;
         public int listX = 0;
         string openpath = @"E:\Kiting\CSVFiles";
         EarthquakeAnalyzer eq = new EarthquakeAnalyzer();
@@ -230,6 +230,9 @@ namespace DataGraph
 
         public void initializeAll()
         {//
+            sps = (int)data.getSamplePerSecond();
+            statime = statime * sps;
+            ltatime = ltatime * sps;
             EHE = data.getEHE();
             STALTAEHE = eq.getSTALTAratio(EHE, statime, ltatime);
             xmax = EHE.Max().ToString();
@@ -254,6 +257,9 @@ namespace DataGraph
             setWaveAnnotation(SwaveZ, 100, EHZchart);
             setWaveAnnotation(PwaveZ, 100, EHZchart);
             //
+            
+            trgr = eq.Trigger;
+            dtrgr = eq.Detrigger;
             station1.Text = stationID;
             x.Text = "EHE";
             station2.Text = stationID;
@@ -355,19 +361,20 @@ namespace DataGraph
         }
 
         
-        private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
+        /*private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Settings set = new Settings(statime, ltatime, eq.Trigger, eq.Detrigger, openpath);
+            Settings set = new Settings(statime, ltatime, sps, trgr, dtrgr, openpath);
             if (set.ShowDialog() == DialogResult.OK)
             {
-                eq.Trigger = set.Trigger;
-                eq.Detrigger = set.Detrigger;
+                trgr = set.Trigger;
+                dtrgr = set.Detrigger;
                 openpath = set.Path;
                 statime = set.StaTime;
                 ltatime = set.LtaTime;
-                MessageBox.Show(eq.Trigger+"\n"+eq.Detrigger+"\n"+statime+"\n"+ltatime+"\n"+openpath);
+                
             }
-        }
+            MessageBox.Show(eq.Trigger + "\n" + eq.Detrigger + "\n" + statime + "\n" + ltatime + "\n" + openpath);
+        }*/
 
         private void pWaveBtn_MouseHover(object sender, EventArgs e)
         {
@@ -381,7 +388,11 @@ namespace DataGraph
 
         private void EHEchart_AnnotationPositionChanging(object sender, AnnotationPositionChangingEventArgs e)
         {
-            header.Text = stationID + ".EHZ. " + date + "  " + hourmin.ToString() + "  " + timesec.ToString() + "  " + sps.ToString() + "sps" + "/\t EHE: " + EHE[listX] + " EHN: " + EHN[listX] + " EHZ: " + EHZ[listX];
+            try
+            {
+                header.Text = stationID + ".EHZ. " + date + "  " + hourmin.ToString() + "  " + timesec.ToString() + "  " + sps.ToString() + "sps" + "/\t EHE: " + EHE[listX] + " EHN: " + EHN[listX] + " EHZ: " + EHZ[listX];
+            }
+            catch (ArgumentOutOfRangeException) { }
             RA.Text = ((listX / sps) % 60).ToString();
             RA.X = e.NewLocationX;
             listX = (int)e.NewLocationX;
@@ -622,11 +633,25 @@ namespace DataGraph
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+            Settings set = new Settings(statime, ltatime, eq.Trigger, eq.Detrigger, openpath);
+            set.ShowDialog();
+            if (set.DialogResult == DialogResult.OK)
+            {
+                statime = set.StaTime * sps;
+                ltatime = set.LtaTime * sps;
+                eq.Trigger = set.Trigger;
+                eq.Detrigger = set.Detrigger;
+                openpath = set.Path;
+            }
+            MessageBox.Show(statime + " " + ltatime + " " + eq.Trigger + " " + eq.Detrigger + " " + openpath + " ");
         }
 
-
-       
-        
+        private void clear_Click(object sender, EventArgs e)
+        {
+            EHEchart.Series[0].Points.Clear();
+            EHNchart.Series[0].Points.Clear();
+            EHZchart.Series[0].Points.Clear();
+        }
     }
 }
 /*int pt1 = (int)e.NewLocationX;

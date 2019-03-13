@@ -352,7 +352,6 @@ namespace EarthquakeGraph
         {
             string watt = "";
             double max = 0;
-            int index;
             for (int x = Convert.ToInt32(start); x < finish; x++)
             {
                 if (Math.Abs(EHN[x]) > max || Math.Abs(EHE[x]) > max)
@@ -437,7 +436,7 @@ namespace EarthquakeGraph
         /// <returns>Returns the direction in degrees</returns>
         public string calculateDirection(List<double> EHE, List<double> EHN, List<double> EHZ, double start, double finish, double degreePhone)
         {
-            string wat = "";
+            string outstring = "";
             double[] output = new double[(int)(finish - start)+5];
             int[] degree = new int[361];
             double angle = 0;
@@ -448,7 +447,7 @@ namespace EarthquakeGraph
             {
                 degree[x] = 0;
             }
-            for (int x = Convert.ToInt32(start); x < finish; x++)
+            for (int x = Convert.ToInt32(start); x < finish+1; x++)
             {
                 if (Math.Abs(EHN[x]) > max || Math.Abs(EHE[x]) > max)
                 {
@@ -459,35 +458,39 @@ namespace EarthquakeGraph
                     index = x;
                 }
             }
-                    if (EHN[index] > 0 && EHE[index] > 0)
-                    {
-                        angle = Math.Atan(EHN[index] / EHE[index]);
-                        deg = (int)Math.Round((angle * 180) / Math.PI);
+            if (EHN[index] >= 0 && EHE[index] >= 0)
+            {
+                angle = Math.Atan(EHN[index] / EHE[index]);
+                deg = (int)Math.Round((angle * 180) / Math.PI);
                         
-                    }
-                    else if (EHE[index] < 0)
-                    {
-                        angle = Math.Atan(EHN[index] / EHE[index]);
-                        deg = (int)Math.Round((angle * 180) / Math.PI);
-                        deg += 180;
-                    }
-                    else if (EHN[index] < 0 && EHE[index] > 0)
-                    {
-                        angle = Math.Atan(EHN[index] / EHE[index]);
-                        deg = (int)Math.Round((angle * 180) / Math.PI);
-                        deg += 360;
-                    }
-                    else
-                        deg = 0;
-                    wat += "\nx: " + EHE[index] + "\n y: " + EHN[index] + "\n z: " + EHZ[index];
-                    wat += "\ndegree of phone: " + degreePhone;
-                    wat += "\nAccelerometer without z: " + deg;
-                    deg2 = EHZ[index] > 0 ? deg : Math.Abs(360 - deg);
-                    wat += "\nAccelerometer with z: " + deg2;
-                    deg2 = (int)((degreePhone - deg2)%360);
-                    deg2 = deg2 < 0 ? 360 + deg2 : deg2;
-                    wat += "\nCalculated with phone: " + deg2;
-            return wat;
+            }
+            else if (EHE[index] < 0)
+            {
+                angle = Math.Atan(EHN[index] / EHE[index]);
+                deg = (int)Math.Round((angle * 180) / Math.PI);
+                deg += 180;
+            }
+            else if (EHN[index] < 0 && EHE[index] >= 0)
+            {
+                angle = Math.Atan(EHN[index] / EHE[index]);
+                deg = (int)Math.Round((angle * 180) / Math.PI);
+                deg += 360;
+            }
+            else
+                deg = 0;
+            outstring += "\nx: " + EHE[index] + "\n y: " + EHN[index] + "\n z: " + EHZ[index];
+            outstring += "\ndegree of phone: " + degreePhone;
+            outstring += "\nAccelerometer without z: " + deg;
+            deg2 = EHZ[index] >= 0 ? (180 + deg)%360:deg;       // positive z is push, negative z is pull
+            outstring += "\nAccelerometer with z: " + deg2;
+
+            deg2 = (int)(degreePhone - deg2);               // Aligning output with phone
+            outstring += "\nCalculated with phone: " + deg2;
+            //deg2 = deg2 >= 360 ? 360 - deg2 : deg2;         // condition if calculated degree exceeds 360
+            deg2 = deg2 < 0 ? 360 + deg2 : deg2;            // condition if calculated degree is negative
+            outstring += "\nCalculated with >360: " + deg2;
+            outstring += "\n"+findOrientation(deg2);
+            return outstring;
         }
         /// <summary>
         /// Calculates the direction of where the earthquake is coming from
@@ -498,40 +501,9 @@ namespace EarthquakeGraph
         /// <param name="z">P-wave z value</param>
         /// <param name="degree">Degree of orientation</param>
         /// <returns>Returns the direction in degrees</returns>
-        public string calculateDirection(double x, double y, double z ,double degreePhone)
+        public string findOrientation(int deg)
         {
-            string output = "";
-            double angle = 0;
-            int deg = 0;
-            if (y > 0 && x > 0)
-            {
-                angle = Math.Atan(y /x);
-                deg = (int)Math.Round((angle * 180) / Math.PI);
-
-            }
-            else if (x < 0)
-            {
-                angle = Math.Atan(y /x);
-                deg = (int)Math.Round((angle * 180) / Math.PI);
-                deg += 180;
-            }
-            else if (y < 0 && x > 0)
-            {
-                angle = Math.Atan(y /x);
-                deg = (int)Math.Round((angle * 180) / Math.PI);
-                deg += 360;
-            }
-            else
-                deg = 0;
-            output += "acceleration: " + deg;
-            output += "phone: " + degreePhone;
-            deg = (int)degreePhone - deg;
-            deg = deg < 0? deg - 180: deg;
-            deg = z > 0 ? deg : Math.Abs(180 - deg);
-            output += "solved: " + deg;
             String where = "NO";
-            if (deg >= 0)
-            {
                 if (deg >= 338 || deg <= 23)
                 {
                     where = "North";
@@ -564,43 +536,7 @@ namespace EarthquakeGraph
                 {
                     where = "NorthEast";
                 }
-            }
-            else
-            {
-                if (deg <= -338 || deg >= -23)
-                {
-                    where = "NNorth";
-                }
-                if (deg > -338 && deg < -293)
-                {
-                    where = "NNorthEast";
-                }
-                if (deg >= -293 && deg < -248)
-                {
-                    where = "NEast";
-                }
-                if (deg >= -248 && deg < -202)
-                {
-                    where = "NSouthEast";
-                }
-                if (deg >= -202 && deg < -158)
-                {
-                    where = "NSouth";
-                }
-                if (deg >= -158 && deg < -112)
-                {
-                    where = "NSouthWest";
-                }
-                if (deg >= -112 && deg < -68)
-                {
-                    where = "NWest";
-                }
-                if (deg >= -68 && deg < -23)
-                {
-                    where = "NNorthWest";
-                }
-            }
-            return output;
+            return where;
         }
 
         #endregion

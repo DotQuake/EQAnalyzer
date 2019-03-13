@@ -19,12 +19,12 @@ namespace DataGraph
         private string path = "";
         public int StaTime
         {
-            get { return staTime*100; }
+            get { return staTime; }
             set { staTime = value; }
         }
         public int LtaTime
         {
-            get { return ltaTime*100; }
+            get { return ltaTime; }
             set { ltaTime = value; }
         }
         public double Trigger
@@ -50,25 +50,35 @@ namespace DataGraph
             trigger = trgr;
             detrigger = dtrgr;
             path = opnpath;
+            MessageBox.Show(staTime + " " + ltaTime + " " + trigger + " " + detrigger + " " + path);
         }
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            staTxtBox.Text = (staTime/100).ToString();
-            ltaTxtBox.Text = (ltaTime/100).ToString();
+           
+            staTxtBox.Text = (staTime).ToString();
+            ltaTxtBox.Text = (ltaTime).ToString();
             thresholdTxtBox.Text = trigger.ToString();
             defaultPathTxtBox.Text = path;
         }
 
         private void OKBtn_Click(object sender, EventArgs e)
         {
-            staTime = Convert.ToInt16(staTxtBox.Text);
-            ltaTime = Convert.ToInt16(ltaTxtBox.Text);
-            //trigger = Convert.ToInt16(thresholdTxtBox.Text);
+            try
+            {
+                staTime = Convert.ToInt16(staTxtBox.Text);
+                ltaTime = Convert.ToInt16(ltaTxtBox.Text);
+                trigger = Convert.ToDouble(thresholdTxtBox.Text);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (FormatException) { MessageBox.Show("Input incorrect format"); }
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
         private void browseFolderBtn_Click(object sender, EventArgs e)

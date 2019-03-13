@@ -282,6 +282,7 @@ namespace DataGraph
                 {
                     locationcbx.Items.Add(s);
                 }
+                statuslabel.Text = "Generate Complete!";
             }
             catch (ArgumentNullException)
             {
@@ -291,7 +292,6 @@ namespace DataGraph
             {
                 statuslabel.Text = "Failure to Connect to the Server";
             }
-            statuslabel.Text = "Generate Complete!";
         }
     }
 }

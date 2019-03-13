@@ -77,6 +77,7 @@
             this.statuses = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.clear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.EHEchart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EHNchart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EHZchart)).BeginInit();
@@ -378,6 +379,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.Gray;
+            this.groupBox1.Controls.Add(this.clear);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.test_magnitude);
             this.groupBox1.Controls.Add(this.test_direction);
@@ -506,6 +508,16 @@
             this.panel1.TabIndex = 18;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // clear
+            // 
+            this.clear.Location = new System.Drawing.Point(498, 15);
+            this.clear.Name = "clear";
+            this.clear.Size = new System.Drawing.Size(75, 33);
+            this.clear.TabIndex = 2;
+            this.clear.Text = "clear";
+            this.clear.UseVisualStyleBackColor = true;
+            this.clear.Click += new System.EventHandler(this.clear_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -590,6 +602,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button zoom_minus;
         private System.Windows.Forms.Button zoom_plus;
+        private System.Windows.Forms.Button clear;
     }
 }
 
