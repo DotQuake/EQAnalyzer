@@ -36,9 +36,9 @@ namespace DataGraph
         {
             WindowState = FormWindowState.Maximized;
             
-            chartControl.createChart(STALTAEHE, STAEHELTA, "x", 0, Color.Black);
-            chartControl.createChart(STALTAEHN, STAEHNLTA, "y", 0, Color.Pink);
-            chartControl.createChart(STALTAEHZ, STAEHZLTA, "z", 0, Color.Yellow);
+            chartControl.createChart(STALTAEHE, STAEHELTA, "x", 0, Color.Red);
+            chartControl.createChart(STALTAEHN, STAEHNLTA, "y", 0, Color.Red);
+            chartControl.createChart(STALTAEHZ, STAEHZLTA, "z", 0, Color.Red);
             //VA1.Visible = false;
         }
        

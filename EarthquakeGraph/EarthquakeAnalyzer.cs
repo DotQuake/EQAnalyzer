@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace EarthquakeGraph
 {
@@ -443,11 +447,7 @@ namespace EarthquakeGraph
             int deg = 0, deg2;
             int index = (int)start;
             double max = 0;
-            for (int x = 0; x < 360; x++)
-            {
-                degree[x] = 0;
-            }
-            for (int x = Convert.ToInt32(start); x < finish+1; x++)
+            for (int x = Convert.ToInt32(start); x <= finish+1; x++)
             {
                 if (Math.Abs(EHN[x]) > max || Math.Abs(EHE[x]) > max)
                 {
@@ -491,6 +491,86 @@ namespace EarthquakeGraph
             outstring += "\nCalculated with >360: " + deg2;
             outstring += "\n"+findOrientation(deg2);
             return outstring;
+        }
+        public Bitmap calculateDirection(List<double> EHE, List<double> EHN, List<double> EHZ, double start, double finish, double degreePhone , PictureBox picturebox)
+        {
+            Pen pipi = new Pen(Color.Red, 1f);
+            int threshold = 100;
+            Bitmap bm = new Bitmap(picturebox.Width, picturebox.Height);
+            string outstring = "";
+            double[] output = new double[(int)(finish - start) + 5];
+            double angle = 0;
+            int sum = 0;
+            int ctr = 0;
+            int deg = 0, deg2;
+            for (int index = (int)start; index <= finish; index++)
+            {
+                if (Math.Abs(EHE[index]) > threshold && Math.Abs(EHN[index]) > threshold)
+                {
+                    if (EHN[index] >= 0 && EHE[index] >= 0)
+                    {
+                        angle = Math.Atan(EHN[index] / EHE[index]);
+                        deg = (int)Math.Round((angle * 180) / Math.PI);
+
+                    }
+                    else if (EHE[index] < 0)
+                    {
+                        angle = Math.Atan(EHN[index] / EHE[index]);
+                        deg = (int)Math.Round((angle * 180) / Math.PI);
+                        deg += 180;
+                    }
+                    else if (EHN[index] < 0 && EHE[index] >= 0)
+                    {
+                        angle = Math.Atan(EHN[index] / EHE[index]);
+                        deg = (int)Math.Round((angle * 180) / Math.PI);
+                        deg += 360;
+                    }
+                    else
+                        deg = 0;
+                    deg2 = EHZ[index] >= 0 ? (180 + deg) % 360 : deg;       // positive z is push, negative z is pull
+                    deg2 = (int)(degreePhone - deg2);               // Aligning output with phone
+                    deg2 = deg2 < 0 ? 360 + deg2 : deg2;
+                    sum += deg2;
+                    ctr++;
+                    int angles = deg2;
+                    using (var g = Graphics.FromImage(bm))
+                    {
+                        int x = 0, y = 0;
+                        Point point1 = new Point(x, y);
+                        Point point2 = new Point(x + (int)((Math.Cos((angles * Math.PI) / 180)) * picturebox.Width/2), y + (int)((Math.Sin((angles * Math.PI) / 180)) * picturebox.Height/2));
+                        g.TranslateTransform(picturebox.Width / 2, picturebox.Height / 2);
+                        g.RotateTransform(-90);
+                        g.DrawLine(Pens.Black, 0, -picturebox.Height, 0, picturebox.Height);
+                        g.DrawLine(Pens.Black, -picturebox.Height, 0, picturebox.Height, 0);
+                        g.DrawLine(pipi, point1, point2);
+                        picturebox.Image = bm;
+                        g.ResetTransform();
+                        g.Dispose();
+                    }
+                }
+            }
+            double ave = sum / ctr;
+            using (var g = Graphics.FromImage(bm))
+            {
+                pipi.Color = Color.Blue;
+                g.TranslateTransform(picturebox.Width / 2, picturebox.Height / 2);
+                g.RotateTransform(-90);
+                Point point3 = new Point((int)((Math.Cos((ave * Math.PI) / 180)) * picturebox.Width/2), (int)((Math.Sin((ave * Math.PI) / 180)) * picturebox.Height/2));
+                g.DrawLine(pipi, new Point(0,0), point3);
+                picturebox.Image = bm;
+                g.ResetTransform();
+                g.Dispose();
+            }
+            return bm;
+        }
+
+        public double countsToG(double count)
+        {
+            double output;
+
+            output = (count * counts)/1.95;
+
+            return output;
         }
         /// <summary>
         /// Calculates the direction of where the earthquake is coming from

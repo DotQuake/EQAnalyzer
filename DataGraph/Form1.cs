@@ -53,7 +53,7 @@ namespace DataGraph
         String timeee = "";
         Stopwatch stopwatch = new Stopwatch();
         const int max = 3;
-
+        Bitmap bm;
         #endregion
 
         CSVRetreiver CSVR = new CSVRetreiver();
@@ -63,9 +63,6 @@ namespace DataGraph
         public Form1()
         {
             InitializeComponent();
-            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
-            backgroundWorker1.ProgressChanged += backgroundWorker1_ProgressChanged;
-            backgroundWorker1.WorkerReportsProgress = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -200,7 +197,6 @@ namespace DataGraph
                     stationID = data.getSitename();
                     initializeAll();
                     setRA();
-                    
                 }
                 catch (Exception) { MessageBox.Show("Wrong file name selected"); }
             }
@@ -234,7 +230,7 @@ namespace DataGraph
             statime = statime * sps;
             ltatime = ltatime * sps;
             EHE = data.getEHE();
-            STALTAEHE = eq.getSTALTAratio(EHE, statime, ltatime);
+            
             xmax = EHE.Max().ToString();
             xmin = EHE.Min().ToString();
             chartControl.createChart(EHEchart, EHE, "x_axis", 0, Color.Gray, VA1);
@@ -242,7 +238,7 @@ namespace DataGraph
             setWaveAnnotation(PwaveX, 100, EHEchart);
             //
             EHN = data.getEHN();
-            STALTAEHN = eq.getSTALTAratio(EHN, statime, ltatime);
+            
             ymax = EHN.Max().ToString();
             ymin = EHN.Min().ToString();
             chartControl.createChart(EHNchart, EHN, "y_axis", 0, Color.Gray, VA2);
@@ -250,7 +246,7 @@ namespace DataGraph
             setWaveAnnotation(PwaveY, 100, EHNchart);
             //
             EHZ = data.getEHZ();
-            STALTAEHZ = eq.getSTALTAratio(EHZ, statime, ltatime);
+            
             zmax = EHZ.Max().ToString();
             zmin = EHZ.Min().ToString();
             chartControl.createChart(EHZchart, EHZ, "z_axis", 0, Color.Gray, VA3);
@@ -284,12 +280,12 @@ namespace DataGraph
         {
             if (fileOpened)
             {
-
-                childform = new STALTA(STALTAEHE, STALTAEHN, STALTAEHZ);
-                childform.Show();
+                backgroundWorker1.WorkerReportsProgress = true;
+                backgroundWorker1.RunWorkerAsync();
             }
             else
-                MessageBox.Show("No file was open");
+                MessageBox.Show("No file was opened");
+                
         }
 
         private void checkEQToolStripMenuItem_Click(object sender, EventArgs e)
@@ -357,24 +353,10 @@ namespace DataGraph
         private void testV2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show(eq.calculateDirection(EHE, EHN, EHZ, xp, xs, degree));
+            //Hysteresis hys = new Hysteresis(EHE,EHN,EHZ,xp,xs, degree);
+            //hys.Show();
             test_direction.Enabled = false;
         }
-
-        
-        /*private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Settings set = new Settings(statime, ltatime, sps, trgr, dtrgr, openpath);
-            if (set.ShowDialog() == DialogResult.OK)
-            {
-                trgr = set.Trigger;
-                dtrgr = set.Detrigger;
-                openpath = set.Path;
-                statime = set.StaTime;
-                ltatime = set.LtaTime;
-                
-            }
-            MessageBox.Show(eq.Trigger + "\n" + eq.Detrigger + "\n" + statime + "\n" + ltatime + "\n" + openpath);
-        }*/
 
         private void pWaveBtn_MouseHover(object sender, EventArgs e)
         {
@@ -471,9 +453,9 @@ namespace DataGraph
             EHEchart.Visible = true;
             EHNchart.Visible = true;
             EHZchart.Visible = true;
-            EHEchart.Series.Clear();
-            EHNchart.Series.Clear();
-            EHZchart.Series.Clear();
+            EHEchart.Series[0].Points.Clear();
+            EHNchart.Series[0].Points.Clear();
+            EHZchart.Series[0].Points.Clear();
             removeWaveAnnotation(VA1, EHEchart);
             removeWaveAnnotation(VA2, EHNchart);
             removeWaveAnnotation(VA3, EHZchart);
@@ -611,22 +593,15 @@ namespace DataGraph
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             loading.Value = e.ProgressPercentage;
+            //statuses.Text=
         }
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            for (int i = 0; i < 100; i++)
-            {
-                Thread.Sleep(1000);
-                backgroundWorker1.ReportProgress(i);
-
-                //Check if there is a request to cancel the process
-                if (backgroundWorker1.CancellationPending)
-                {
-                    e.Cancel = true;
-                    backgroundWorker1.ReportProgress(0);
-                    return;
-                }
-            }
+            STALTAEHE = eq.getSTALTAratio(EHE, statime, ltatime);
+            backgroundWorker1.ReportProgress(33);
+            STALTAEHN = eq.getSTALTAratio(EHN, statime, ltatime);
+            backgroundWorker1.ReportProgress(66);
+            STALTAEHZ = eq.getSTALTAratio(EHZ, statime, ltatime);
             backgroundWorker1.ReportProgress(100);
         }
 
@@ -648,9 +623,13 @@ namespace DataGraph
 
         private void clear_Click(object sender, EventArgs e)
         {
-            EHEchart.Series[0].Points.Clear();
-            EHNchart.Series[0].Points.Clear();
-            EHZchart.Series[0].Points.Clear();
+            
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+                childform = new STALTA(STALTAEHE, STALTAEHN, STALTAEHZ);
+                childform.Show();
         }
     }
 }

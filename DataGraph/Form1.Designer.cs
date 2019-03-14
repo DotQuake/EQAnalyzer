@@ -77,7 +77,6 @@
             this.statuses = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.clear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.EHEchart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EHNchart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EHZchart)).BeginInit();
@@ -246,9 +245,10 @@
             // 
             this.x.AutoSize = true;
             this.x.BackColor = System.Drawing.Color.Gray;
+            this.x.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.x.Location = new System.Drawing.Point(14, 219);
             this.x.Name = "x";
-            this.x.Size = new System.Drawing.Size(28, 17);
+            this.x.Size = new System.Drawing.Size(34, 20);
             this.x.TabIndex = 15;
             this.x.Text = "     ";
             this.x.Visible = false;
@@ -257,9 +257,10 @@
             // 
             this.max1.AutoSize = true;
             this.max1.BackColor = System.Drawing.Color.Gray;
+            this.max1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.max1.Location = new System.Drawing.Point(14, 153);
             this.max1.Name = "max1";
-            this.max1.Size = new System.Drawing.Size(28, 17);
+            this.max1.Size = new System.Drawing.Size(34, 20);
             this.max1.TabIndex = 15;
             this.max1.Text = "     ";
             this.max1.Visible = false;
@@ -268,9 +269,10 @@
             // 
             this.station1.AutoSize = true;
             this.station1.BackColor = System.Drawing.Color.Gray;
+            this.station1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.station1.Location = new System.Drawing.Point(14, 262);
             this.station1.Name = "station1";
-            this.station1.Size = new System.Drawing.Size(28, 17);
+            this.station1.Size = new System.Drawing.Size(34, 20);
             this.station1.TabIndex = 15;
             this.station1.Text = "     ";
             this.station1.Visible = false;
@@ -279,9 +281,10 @@
             // 
             this.min1.AutoSize = true;
             this.min1.BackColor = System.Drawing.Color.Gray;
+            this.min1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.min1.Location = new System.Drawing.Point(14, 322);
             this.min1.Name = "min1";
-            this.min1.Size = new System.Drawing.Size(28, 17);
+            this.min1.Size = new System.Drawing.Size(34, 20);
             this.min1.TabIndex = 15;
             this.min1.Text = "     ";
             this.min1.Visible = false;
@@ -290,9 +293,10 @@
             // 
             this.y.AutoSize = true;
             this.y.BackColor = System.Drawing.Color.Gray;
+            this.y.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.y.Location = new System.Drawing.Point(14, 466);
             this.y.Name = "y";
-            this.y.Size = new System.Drawing.Size(28, 17);
+            this.y.Size = new System.Drawing.Size(34, 20);
             this.y.TabIndex = 15;
             this.y.Text = "     ";
             this.y.Visible = false;
@@ -301,9 +305,10 @@
             // 
             this.station2.AutoSize = true;
             this.station2.BackColor = System.Drawing.Color.Gray;
+            this.station2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.station2.Location = new System.Drawing.Point(14, 508);
             this.station2.Name = "station2";
-            this.station2.Size = new System.Drawing.Size(28, 17);
+            this.station2.Size = new System.Drawing.Size(34, 20);
             this.station2.TabIndex = 15;
             this.station2.Text = "     ";
             this.station2.Visible = false;
@@ -312,9 +317,10 @@
             // 
             this.min2.AutoSize = true;
             this.min2.BackColor = System.Drawing.Color.Gray;
+            this.min2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.min2.Location = new System.Drawing.Point(14, 578);
             this.min2.Name = "min2";
-            this.min2.Size = new System.Drawing.Size(28, 17);
+            this.min2.Size = new System.Drawing.Size(34, 20);
             this.min2.TabIndex = 15;
             this.min2.Text = "     ";
             this.min2.Visible = false;
@@ -323,9 +329,10 @@
             // 
             this.max2.AutoSize = true;
             this.max2.BackColor = System.Drawing.Color.Gray;
+            this.max2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.max2.Location = new System.Drawing.Point(14, 404);
             this.max2.Name = "max2";
-            this.max2.Size = new System.Drawing.Size(28, 17);
+            this.max2.Size = new System.Drawing.Size(34, 20);
             this.max2.TabIndex = 15;
             this.max2.Text = "     ";
             this.max2.Visible = false;
@@ -334,9 +341,10 @@
             // 
             this.z.AutoSize = true;
             this.z.BackColor = System.Drawing.Color.Gray;
+            this.z.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.z.Location = new System.Drawing.Point(14, 732);
             this.z.Name = "z";
-            this.z.Size = new System.Drawing.Size(28, 17);
+            this.z.Size = new System.Drawing.Size(34, 20);
             this.z.TabIndex = 15;
             this.z.Text = "     ";
             this.z.Visible = false;
@@ -345,9 +353,10 @@
             // 
             this.station3.AutoSize = true;
             this.station3.BackColor = System.Drawing.Color.Gray;
+            this.station3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.station3.Location = new System.Drawing.Point(14, 776);
             this.station3.Name = "station3";
-            this.station3.Size = new System.Drawing.Size(28, 17);
+            this.station3.Size = new System.Drawing.Size(34, 20);
             this.station3.TabIndex = 15;
             this.station3.Text = "     ";
             this.station3.Visible = false;
@@ -356,9 +365,10 @@
             // 
             this.min3.AutoSize = true;
             this.min3.BackColor = System.Drawing.Color.Gray;
+            this.min3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.min3.Location = new System.Drawing.Point(14, 840);
             this.min3.Name = "min3";
-            this.min3.Size = new System.Drawing.Size(28, 17);
+            this.min3.Size = new System.Drawing.Size(34, 20);
             this.min3.TabIndex = 15;
             this.min3.Text = "     ";
             this.min3.Visible = false;
@@ -367,9 +377,10 @@
             // 
             this.max3.AutoSize = true;
             this.max3.BackColor = System.Drawing.Color.Gray;
+            this.max3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.max3.Location = new System.Drawing.Point(14, 669);
             this.max3.Name = "max3";
-            this.max3.Size = new System.Drawing.Size(28, 17);
+            this.max3.Size = new System.Drawing.Size(34, 20);
             this.max3.TabIndex = 15;
             this.max3.Text = "     ";
             this.max3.Visible = false;
@@ -379,7 +390,6 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.Gray;
-            this.groupBox1.Controls.Add(this.clear);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.test_magnitude);
             this.groupBox1.Controls.Add(this.test_direction);
@@ -494,6 +504,7 @@
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
             // panel1
             // 
@@ -507,16 +518,6 @@
             this.panel1.Size = new System.Drawing.Size(1772, 801);
             this.panel1.TabIndex = 18;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            // 
-            // clear
-            // 
-            this.clear.Location = new System.Drawing.Point(498, 15);
-            this.clear.Name = "clear";
-            this.clear.Size = new System.Drawing.Size(75, 33);
-            this.clear.TabIndex = 2;
-            this.clear.Text = "clear";
-            this.clear.UseVisualStyleBackColor = true;
-            this.clear.Click += new System.EventHandler(this.clear_Click);
             // 
             // Form1
             // 
@@ -602,7 +603,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button zoom_minus;
         private System.Windows.Forms.Button zoom_plus;
-        private System.Windows.Forms.Button clear;
     }
 }
 

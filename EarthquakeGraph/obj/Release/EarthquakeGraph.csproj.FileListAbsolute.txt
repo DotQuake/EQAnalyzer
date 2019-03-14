@@ -4,3 +4,5 @@ C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\o
 C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\obj\Release\EarthquakeGraph.csproj.ResolveComReference.cache
 C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\obj\Release\EarthquakeGraph.dll
 C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\obj\Release\EarthquakeGraph.pdb
+C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\obj\Release\EarthquakeGraph.Hysteresis.resources
+C:\Users\Keith\Documents\Visual Studio 2012\Projects\DataGraph\EarthquakeGraph\obj\Release\EarthquakeGraph.csproj.GenerateResource.Cache
