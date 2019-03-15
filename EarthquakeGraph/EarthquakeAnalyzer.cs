@@ -22,7 +22,7 @@ namespace EarthquakeGraph
         private int start, end, axis;
         private string state = "checkIfTriggered";
         private double magnitude = 0;
-        private int triggertime = 10;
+        private int triggertime = 5;
         private double counts = 0.0000625;
 
         /// <summary>
@@ -257,6 +257,7 @@ namespace EarthquakeGraph
             List<double> output = new List<double>();
             Queue<double> buffs = new Queue<double>();
             double ave = 0;
+
             for (int x = 0; x < input.Count; x++)
             {
                // ave = Math.Abs(input[x]);
@@ -290,8 +291,8 @@ namespace EarthquakeGraph
         {
             double quo = 1;
             List<double> staltaRatio = new List<double>();
-            List<double> sta = new List<double>(getSTA(input, period1));
-            List<double> lta = new List<double>(getLTA(input, period2));
+            List<double> sta = new List<double>(getSTA(input,period1));
+            List<double> lta = new List<double>(getLTA(input,period2));
             for (int x = 0; x < input.Count; x++)
             {
                 if (sta[x] != 0 && lta[x] != 0)
@@ -301,6 +302,41 @@ namespace EarthquakeGraph
 
                 staltaRatio.Add(quo);
             }
+            /*
+            List<double> staltaRatio = new List<double>(input.Count);
+            List<double> sta = new List<double>(input.Count);
+            List<double> lta = new List<double>(input.Count);
+            double[] buffssta = new double[period1];
+            Queue<double> buffslta = new Queue<double>();
+            int current_index = 0;
+            double avesta = 0;
+            double avelta = 0;
+            for (int x = 0; x < input.Count; x++)
+            {
+                // lta
+                buffslta.Enqueue(Math.Abs(input[x]));
+                if (buffslta.Count >= period2)
+                {
+                    buffslta.Dequeue();
+                }
+                avelta = buffslta.Average();
+                lta.Add(avelta);
+                //sta
+                buffssta[current_index] = Math.Abs(input[x]) / period1;
+                double ma = 0.0;
+                for (int j = 0; j < period1; j++)
+                {
+                    ma += buffssta[j];
+                }
+                if (x > period1)
+                    sta.Add(ma);
+                else
+                    sta.Add(1);
+
+                current_index = (current_index + 1) % period1;
+
+                staltaRatio.Add(sta[x] / lta[x]);
+            }*/
             return staltaRatio;
         }
         /// <summary>
@@ -458,26 +494,30 @@ namespace EarthquakeGraph
                     index = x;
                 }
             }
-            if (EHN[index] >= 0 && EHE[index] >= 0)
+            try
             {
-                angle = Math.Atan(EHN[index] / EHE[index]);
-                deg = (int)Math.Round((angle * 180) / Math.PI);
-                        
+                if (EHN[index] >= 0 && EHE[index] >= 0)
+                {
+                    angle = Math.Atan(EHN[index] / EHE[index]);
+                    deg = (int)Math.Round((angle * 180) / Math.PI);
+
+                }
+                else if (EHE[index] < 0)
+                {
+                    angle = Math.Atan(EHN[index] / EHE[index]);
+                    deg = (int)Math.Round((angle * 180) / Math.PI);
+                    deg += 180;
+                }
+                else if (EHN[index] < 0 && EHE[index] >= 0)
+                {
+                    angle = Math.Atan(EHN[index] / EHE[index]);
+                    deg = (int)Math.Round((angle * 180) / Math.PI);
+                    deg += 360;
+                }
+                else
+                    deg = 0;
             }
-            else if (EHE[index] < 0)
-            {
-                angle = Math.Atan(EHN[index] / EHE[index]);
-                deg = (int)Math.Round((angle * 180) / Math.PI);
-                deg += 180;
-            }
-            else if (EHN[index] < 0 && EHE[index] >= 0)
-            {
-                angle = Math.Atan(EHN[index] / EHE[index]);
-                deg = (int)Math.Round((angle * 180) / Math.PI);
-                deg += 360;
-            }
-            else
-                deg = 0;
+            catch (DivideByZeroException) { }
             outstring += "\nx: " + EHE[index] + "\n y: " + EHN[index] + "\n z: " + EHZ[index];
             outstring += "\ndegree of phone: " + degreePhone;
             outstring += "\nAccelerometer without z: " + deg;

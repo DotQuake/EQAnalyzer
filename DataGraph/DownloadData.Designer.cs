@@ -419,7 +419,7 @@
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DownloadData";
-            this.Text = "Design 2";
+            this.Text = "Download CSV file";
             this.Load += new System.EventHandler(this.Design2Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

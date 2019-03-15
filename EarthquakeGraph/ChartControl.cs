@@ -74,8 +74,8 @@ namespace EarthquakeGraph
                 max = Math.Abs(series.Min()) * 1.1;
             chart.AxisX.Minimum = 0;
             chart.AxisX.Maximum = series.Count;
-            chart.AxisY.Minimum = -max;
-            chart.AxisY.Maximum = max;
+            chart.AxisY.Minimum = series.Min();
+            chart.AxisY.Maximum = series.Max();
             chart.AxisX.Interval = Math.Round((double)series.Count / 9);
             chart1.Series.Add(axis);
             chart1.Legends.Clear();
@@ -89,7 +89,7 @@ namespace EarthquakeGraph
             chart1.ChartAreas[chartArea].AxisX.MajorGrid.LineWidth = 0;
             chart1.ChartAreas[chartArea].AxisY.MajorGrid.LineWidth = 0;
             chart1.ChartAreas[chartArea].AxisX.LabelStyle.Enabled = false;
-            chart1.ChartAreas[chartArea].AxisY.LabelStyle.Enabled = false;
+            //chart1.ChartAreas[chartArea].AxisY.LabelStyle.Enabled = false;
 
             //chart1.DataBind();
             for (int x = 0; x < series.Count; x++)

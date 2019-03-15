@@ -38,7 +38,7 @@ namespace DataGraph
         public volatile bool killThread = false;
         public double sec, timesec, hourmin, degree, longitude, latitude, magnitude, hypocenter, trgr, dtrgr;
         public string stationID, date, xmax, xmin, ymax, ymin, zmax, zmin;
-        public bool fileOpened = false, clicked = false, psSet = false, threadbool = false;
+        public bool fileOpened = false, clicked = false, psSet = false, threadbool = false, staltafinish = false;
         public double pwaveEHE, swaveEHE, pwaveEHN, swaveEHN, pwaveEHZ, swaveEHZ, holder = 0, xVal = 0, xp, xs;
         public int sps, axis = 0;
         public int statime = 2, ltatime = 30;
@@ -74,6 +74,7 @@ namespace DataGraph
             SwaveX.Visible = false;
             SwaveY.Visible = false;
             SwaveZ.Visible = false;
+            test_magnitude.Enabled = false;
             tooltip.AutomaticDelay = 3000;
         }
 
@@ -102,9 +103,9 @@ namespace DataGraph
                 PwaveX.Visible = true;
                 PwaveY.Visible = true;
                 PwaveZ.Visible = true;
-                VA1.X = listX-2;
-                VA2.X = listX - 2;
-                VA3.X = listX - 2;
+                VA1.X = listX+50;
+                VA2.X = listX + 50;
+                VA3.X = listX + 50;
                 xVal = 0;
             }
             else
@@ -134,9 +135,9 @@ namespace DataGraph
                     SwaveX.Visible = true;
                     SwaveY.Visible = true;
                     SwaveZ.Visible = true;
-                    VA1.X = listX - 2;
-                    VA2.X = listX - 2;
-                    VA3.X = listX - 2;
+                    VA1.X = 0;
+                    VA2.X = 0;
+                    VA3.X = 0;
                     xVal = 0;
 
                     test_direction.Enabled = true;
@@ -157,21 +158,9 @@ namespace DataGraph
 
         #endregion
 
-        private void call_back(int i)
-        {
-            if (i == 0)
-                thread1();
-            else if (i == 1)
-                thread2();
-            else if (i == 2)
-                thread3();
-            
-            System.Threading.Thread.Sleep(500);
-        }
-
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //backgroundWorker1.RunWorkerAsync();
+            backgroundWorker1.CancelAsync();
             loading.Maximum = 100;
             loading.Step = 1;
             loading.Value = 0;
@@ -186,6 +175,7 @@ namespace DataGraph
             {
                 
                 fileName = opensesame.FileName.ToString();
+                this.Text = fileName;
                 clearAll();
                 try
                 {
@@ -206,10 +196,28 @@ namespace DataGraph
             stopwatch.Reset();
         }
 
+        private List<double> centerize(List<double> list)
+        {
+            List<double> convert = new List<double>();
+            for (int x = 0; x < list.Count; x++)
+            {
+                convert.Add(list[x] - Math.Round(list.Average()));
+            }
+            return convert;
+        }
+
+        private void call_back(int i)
+        {
+            thread1();
+            System.Threading.Thread.Sleep(500);
+        }
+
         private void thread1()
         {
             Console.WriteLine("thread1 start");
             
+            Console.WriteLine("thread1 end");
+            //
         }
 
         private void thread2()
@@ -227,9 +235,7 @@ namespace DataGraph
         public void initializeAll()
         {//
             sps = (int)data.getSamplePerSecond();
-            statime = statime * sps;
-            ltatime = ltatime * sps;
-            EHE = data.getEHE();
+            EHE = centerize(data.getEHE());
             
             xmax = EHE.Max().ToString();
             xmin = EHE.Min().ToString();
@@ -237,7 +243,7 @@ namespace DataGraph
             setWaveAnnotation(SwaveX, 100, EHEchart);
             setWaveAnnotation(PwaveX, 100, EHEchart);
             //
-            EHN = data.getEHN();
+            EHN = centerize(data.getEHN());
             
             ymax = EHN.Max().ToString();
             ymin = EHN.Min().ToString();
@@ -245,7 +251,7 @@ namespace DataGraph
             setWaveAnnotation(SwaveY, 100, EHNchart);
             setWaveAnnotation(PwaveY, 100, EHNchart);
             //
-            EHZ = data.getEHZ();
+            EHZ = centerize(data.getEHZ());
             
             zmax = EHZ.Max().ToString();
             zmin = EHZ.Min().ToString();
@@ -273,15 +279,17 @@ namespace DataGraph
             degree = data.getCompass();
             longitude = data.getLongitude();
             latitude = data.getLatitude();
+            backgroundWorker1.WorkerReportsProgress = true;
+            backgroundWorker1.RunWorkerAsync();
             fileOpened = true;
         }
 
         private void sTALTAToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (fileOpened)
+            if (fileOpened && staltafinish)
             {
-                backgroundWorker1.WorkerReportsProgress = true;
-                backgroundWorker1.RunWorkerAsync();
+                childform = new STALTA(STALTAEHE, STALTAEHN, STALTAEHZ);
+                childform.Show();
             }
             else
                 MessageBox.Show("No file was opened");
@@ -290,51 +298,39 @@ namespace DataGraph
 
         private void checkEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            magnitude = 0;
-            degree = 0;
-            hypocenter = 0;
+            string output = "";
             if (fileOpened)
             {
-                if (psSet)
-                {
-                    if (xs < xp)
-                    {
-                        MessageBox.Show("P-wave must be earlier than S-wave");
-                        xs = 0;
-                        xp = 0;
-                    }
-                    else
-                    {
                         if (eq.checkEarhtquakeV2(STALTAEHE, 1, sps) || eq.checkEarhtquakeV2(STALTAEHN, 2, sps) || eq.checkEarhtquakeV2(STALTAEHZ, 3, sps))
                         {
-                            if (eq.Axis == 1)
+                            /*if (eq.Axis == 1)
                             {
                               //  degree = eq.calculateDirection(EHE, EHN, EHZ, xp, xs, degree);
                               //  magnitude = eq.calculateMagnitude(EHE, xp, xs);
-                                hypocenter = eq.calculateHypocenter(pwaveEHE, swaveEHE, sps, sec);
+                              //  hypocenter = eq.calculateHypocenter(pwaveEHE, swaveEHE, sps, sec);
                             }
                             else if (eq.Axis == 2)
                             {
                              //   degree = eq.calculateDirection(EHE, EHN, EHZ, xp, xs, degree);
                              //   magnitude = eq.calculateMagnitude(EHN, xp, xs);
-                                hypocenter = eq.calculateHypocenter(pwaveEHN, swaveEHN, sps, sec);
+                             //   hypocenter = eq.calculateHypocenter(pwaveEHN, swaveEHN, sps, sec);
                             }
                             else
                             {
                                // degree = eq.calculateDirection(EHE, EHN, EHZ, xp, xs, degree);
                               //  magnitude = eq.calculateMagnitude(EHZ, xp, xs);
-                                hypocenter = eq.calculateHypocenter(pwaveEHZ, swaveEHZ, sps, sec);
-                            }
-                            MessageBox.Show("Eathquake detected\nMagnitude:\t" + magnitude.ToString() + "\nDistance:\t" + "\t" + hypocenter + "km" + "\nDirection:\t" + degree + "\nAxis:\t" + eq.Axis);
+                               // hypocenter = eq.calculateHypocenter(pwaveEHZ, swaveEHZ, sps, sec);
+                            }*/
+                            output += eq.calculateDirection(EHE, EHN, EHZ, xp, xs, degree);
+                            output += eq.calculateMagnitude(EHE, EHN, EHZ, xp, xs);
+                            output += "\nHypocenter: "+eq.calculateHypocenter(xp, xs, sps, sec);
+                            MessageBox.Show(output);
                         }
                         else
                             MessageBox.Show("No Earthquake Detected");
-                    }
-                }
+            }
                 else
                     MessageBox.Show("Set P-wave and S-wave first");
-            }
-
         }
 
         private void downloadCsvToolStripMenuItem_Click(object sender, EventArgs e)
@@ -370,19 +366,22 @@ namespace DataGraph
 
         private void EHEchart_AnnotationPositionChanging(object sender, AnnotationPositionChangingEventArgs e)
         {
+            
             try
             {
-                header.Text = stationID + ".EHZ. " + date + "  " + hourmin.ToString() + "  " + timesec.ToString() + "  " + sps.ToString() + "sps" + "/\t EHE: " + EHE[listX] + " EHN: " + EHN[listX] + " EHZ: " + EHZ[listX];
+                header.Text = stationID + ".EHZ. " + date + "  " + hourmin.ToString() + "  " + timesec + "  " + sps.ToString() + "sps" + "/\t EHE: " + EHE[listX] + " EHN: " + EHN[listX] + " EHZ: " + EHZ[listX];
             }
-            catch (ArgumentOutOfRangeException) { }
+            catch (ArgumentOutOfRangeException) { }      
+            RA.X = VA3.X - (RA.Width / 2);
             RA.Text = ((listX / sps) % 60).ToString();
             RA.X = e.NewLocationX;
             listX = (int)e.NewLocationX;
-            RA.Y = -EHZ.Min();  
+            RA.Y = (EHZ.Min() * 1.05); 
             RA.X = e.NewLocationX;
             VA1.X = e.NewLocationX;
             VA2.X = e.NewLocationX;
             VA3.X = e.NewLocationX;
+            
             
             EHEchart.Update();
             EHNchart.Update();
@@ -597,12 +596,10 @@ namespace DataGraph
         }
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            STALTAEHE = eq.getSTALTAratio(EHE, statime, ltatime);
-            backgroundWorker1.ReportProgress(33);
-            STALTAEHN = eq.getSTALTAratio(EHN, statime, ltatime);
-            backgroundWorker1.ReportProgress(66);
-            STALTAEHZ = eq.getSTALTAratio(EHZ, statime, ltatime);
-            backgroundWorker1.ReportProgress(100);
+            Console.WriteLine("Async start");
+            STALTAEHE = eq.getSTALTAratio(EHE, statime * sps, ltatime * sps);
+            STALTAEHN = eq.getSTALTAratio(EHN, statime * sps, ltatime * sps);
+            STALTAEHZ = eq.getSTALTAratio(EHZ, statime * sps, ltatime * sps);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -612,11 +609,13 @@ namespace DataGraph
             set.ShowDialog();
             if (set.DialogResult == DialogResult.OK)
             {
-                statime = set.StaTime * sps;
-                ltatime = set.LtaTime * sps;
+                statime = set.StaTime;
+                ltatime = set.LtaTime;
                 eq.Trigger = set.Trigger;
                 eq.Detrigger = set.Detrigger;
                 openpath = set.Path;
+                if(!backgroundWorker1.IsBusy)
+                    backgroundWorker1.RunWorkerAsync();
             }
             MessageBox.Show(statime + " " + ltatime + " " + eq.Trigger + " " + eq.Detrigger + " " + openpath + " ");
         }
@@ -628,8 +627,8 @@ namespace DataGraph
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-                childform = new STALTA(STALTAEHE, STALTAEHN, STALTAEHZ);
-                childform.Show();
+            staltafinish = true;
+            Console.WriteLine("stalta load finish");
         }
     }
 }

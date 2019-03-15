@@ -68,8 +68,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.test_magnitude = new System.Windows.Forms.Button();
             this.test_direction = new System.Windows.Forms.Button();
-            this.zoom_minus = new System.Windows.Forms.Button();
-            this.zoom_plus = new System.Windows.Forms.Button();
             this.sWaveBtn = new System.Windows.Forms.Button();
             this.pWaveBtn = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -244,7 +242,7 @@
             // x
             // 
             this.x.AutoSize = true;
-            this.x.BackColor = System.Drawing.Color.Gray;
+            this.x.BackColor = System.Drawing.Color.Transparent;
             this.x.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.x.Location = new System.Drawing.Point(14, 219);
             this.x.Name = "x";
@@ -256,7 +254,7 @@
             // max1
             // 
             this.max1.AutoSize = true;
-            this.max1.BackColor = System.Drawing.Color.Gray;
+            this.max1.BackColor = System.Drawing.Color.Transparent;
             this.max1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.max1.Location = new System.Drawing.Point(14, 153);
             this.max1.Name = "max1";
@@ -268,7 +266,7 @@
             // station1
             // 
             this.station1.AutoSize = true;
-            this.station1.BackColor = System.Drawing.Color.Gray;
+            this.station1.BackColor = System.Drawing.Color.Transparent;
             this.station1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.station1.Location = new System.Drawing.Point(14, 262);
             this.station1.Name = "station1";
@@ -280,7 +278,7 @@
             // min1
             // 
             this.min1.AutoSize = true;
-            this.min1.BackColor = System.Drawing.Color.Gray;
+            this.min1.BackColor = System.Drawing.Color.Transparent;
             this.min1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.min1.Location = new System.Drawing.Point(14, 322);
             this.min1.Name = "min1";
@@ -292,7 +290,7 @@
             // y
             // 
             this.y.AutoSize = true;
-            this.y.BackColor = System.Drawing.Color.Gray;
+            this.y.BackColor = System.Drawing.Color.Transparent;
             this.y.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.y.Location = new System.Drawing.Point(14, 466);
             this.y.Name = "y";
@@ -304,7 +302,7 @@
             // station2
             // 
             this.station2.AutoSize = true;
-            this.station2.BackColor = System.Drawing.Color.Gray;
+            this.station2.BackColor = System.Drawing.Color.Transparent;
             this.station2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.station2.Location = new System.Drawing.Point(14, 508);
             this.station2.Name = "station2";
@@ -316,7 +314,7 @@
             // min2
             // 
             this.min2.AutoSize = true;
-            this.min2.BackColor = System.Drawing.Color.Gray;
+            this.min2.BackColor = System.Drawing.Color.Transparent;
             this.min2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.min2.Location = new System.Drawing.Point(14, 578);
             this.min2.Name = "min2";
@@ -328,7 +326,7 @@
             // max2
             // 
             this.max2.AutoSize = true;
-            this.max2.BackColor = System.Drawing.Color.Gray;
+            this.max2.BackColor = System.Drawing.Color.Transparent;
             this.max2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.max2.Location = new System.Drawing.Point(14, 404);
             this.max2.Name = "max2";
@@ -340,7 +338,7 @@
             // z
             // 
             this.z.AutoSize = true;
-            this.z.BackColor = System.Drawing.Color.Gray;
+            this.z.BackColor = System.Drawing.Color.Transparent;
             this.z.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.z.Location = new System.Drawing.Point(14, 732);
             this.z.Name = "z";
@@ -352,7 +350,7 @@
             // station3
             // 
             this.station3.AutoSize = true;
-            this.station3.BackColor = System.Drawing.Color.Gray;
+            this.station3.BackColor = System.Drawing.Color.Transparent;
             this.station3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.station3.Location = new System.Drawing.Point(14, 776);
             this.station3.Name = "station3";
@@ -364,7 +362,7 @@
             // min3
             // 
             this.min3.AutoSize = true;
-            this.min3.BackColor = System.Drawing.Color.Gray;
+            this.min3.BackColor = System.Drawing.Color.Transparent;
             this.min3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.min3.Location = new System.Drawing.Point(14, 840);
             this.min3.Name = "min3";
@@ -376,7 +374,7 @@
             // max3
             // 
             this.max3.AutoSize = true;
-            this.max3.BackColor = System.Drawing.Color.Gray;
+            this.max3.BackColor = System.Drawing.Color.Transparent;
             this.max3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.max3.Location = new System.Drawing.Point(14, 669);
             this.max3.Name = "max3";
@@ -393,8 +391,6 @@
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.test_magnitude);
             this.groupBox1.Controls.Add(this.test_direction);
-            this.groupBox1.Controls.Add(this.zoom_minus);
-            this.groupBox1.Controls.Add(this.zoom_plus);
             this.groupBox1.Controls.Add(this.sWaveBtn);
             this.groupBox1.Controls.Add(this.pWaveBtn);
             this.groupBox1.Location = new System.Drawing.Point(0, 27);
@@ -416,7 +412,7 @@
             // test_magnitude
             // 
             this.test_magnitude.Enabled = false;
-            this.test_magnitude.Location = new System.Drawing.Point(364, 15);
+            this.test_magnitude.Location = new System.Drawing.Point(280, 15);
             this.test_magnitude.Name = "test_magnitude";
             this.test_magnitude.Size = new System.Drawing.Size(127, 33);
             this.test_magnitude.TabIndex = 0;
@@ -427,33 +423,13 @@
             // test_direction
             // 
             this.test_direction.Enabled = false;
-            this.test_direction.Location = new System.Drawing.Point(243, 15);
+            this.test_direction.Location = new System.Drawing.Point(159, 15);
             this.test_direction.Name = "test_direction";
             this.test_direction.Size = new System.Drawing.Size(115, 33);
             this.test_direction.TabIndex = 0;
             this.test_direction.Text = "Test direction";
             this.test_direction.UseVisualStyleBackColor = true;
             this.test_direction.Click += new System.EventHandler(this.testV2ToolStripMenuItem_Click);
-            // 
-            // zoom_minus
-            // 
-            this.zoom_minus.Location = new System.Drawing.Point(201, 15);
-            this.zoom_minus.Name = "zoom_minus";
-            this.zoom_minus.Size = new System.Drawing.Size(36, 33);
-            this.zoom_minus.TabIndex = 0;
-            this.zoom_minus.Text = "-";
-            this.zoom_minus.UseVisualStyleBackColor = true;
-            this.zoom_minus.Click += new System.EventHandler(this.zoom_minus_Click);
-            // 
-            // zoom_plus
-            // 
-            this.zoom_plus.Location = new System.Drawing.Point(159, 15);
-            this.zoom_plus.Name = "zoom_plus";
-            this.zoom_plus.Size = new System.Drawing.Size(36, 33);
-            this.zoom_plus.TabIndex = 0;
-            this.zoom_plus.Text = "+";
-            this.zoom_plus.UseVisualStyleBackColor = true;
-            this.zoom_plus.Click += new System.EventHandler(this.zoom_plus_Click);
             // 
             // sWaveBtn
             // 
@@ -502,6 +478,8 @@
             // 
             // backgroundWorker1
             // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
@@ -545,7 +523,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "EQAnal Wave";
+            this.Text = "EQAnalyzer Wave";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.EHEchart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EHNchart)).EndInit();
@@ -601,8 +579,6 @@
         private System.Windows.Forms.Button test_magnitude;
         private System.Windows.Forms.Button test_direction;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button zoom_minus;
-        private System.Windows.Forms.Button zoom_plus;
     }
 }
 
